@@ -1,0 +1,15 @@
+@import "bootstrap/scss/functions";
+@import "./helpers/variables";
+@import "bootstrap/scss/mixins";
+
+@import "bootstrap/scss/bootstrap";
+
+// Then add additional custom code here
+@import "./base/base";
+@import "./components/navbar";
+@import "./components/banner";
+@import "./components/card";
+@import "./components/swiper";
+@import "./components/home";
+@import "./components/check";
+@import "./components/toast";
