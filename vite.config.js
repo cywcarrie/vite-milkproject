@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
@@ -8,6 +9,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  base: process.env.NODE_ENV === 'production' ? '/vite-milkproject/' : '/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
