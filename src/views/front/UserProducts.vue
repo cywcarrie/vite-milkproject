@@ -34,8 +34,7 @@
               @click.prevent="selectCategory = item">
               <i class="bi bi-house-heart me-2"></i>
               只想喝{{ item }}
-              </button>
-              
+              </button>              
             </div>
           </div>
           <div class="dropdown d-block d-md-none w-100">
@@ -49,47 +48,111 @@
                 @click.prevent="selectCategory = item"><button class="dropdown-item fw-bold" type="button"><i class="bi bi-house-heart me-2"></i>只想喝{{ item }}</button></li>
             </ul>
           </div>
+          <div class="input-group mt-4 mb-3">
+            <input
+              type="text"
+              class="form-control border border-primary border-2 rounded-0"
+              placeholder="請輸入搜尋商品"
+              v-model="search"
+            />
+          </div>
         </div>
-        <div class="col-lg-9">
-          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
-            <div class="col mb-4" v-for="item in filterProducts" :key="item.id">
-              <div class=" card product-card w-100 h-100" style="width: 18rem">
-                <RouterLink :to="`/product/${item.id}`">
-                  <div class="product-img cursor-pointer" @click="getProduct(item.id)">
-                    <img
-                    style=" height: 180px; background-position: center"
-                    :src="item.imageUrl"
-                    class="card-img-top object-fit-cover"
-                    alt="productImages"/>
-                    <span class="seemore-text d-flex justify-content-center align-items-center text-white fw-bold">
-                      <i class="bi bi-search pe-1"></i>
-                        查看更多
-                    </span>
-                  </div>
-                  <div class="card-body p-3">
-                    <div class="d-flex justify-content-start text-primary fw-bold">
-                      <p><i class="bi bi-house-heart me-2"></i>只想喝{{ item.category }}</p>
+        <template v-if="search">
+          <div class="col-lg-9">
+            <div class="mb-3">
+              <div class="fs-5">
+                以下為您顯示 <span class="fs-4 text-primary fw-bold">{{ search }}</span> 的結果
+                <button type="button" class="btn btn-outline-danger btn-sm ms-2" @click="getProducts()">
+                  <i class="bi bi-x-circle pe-1"></i>取消搜尋
+                </button>
+              </div>
+            </div>            
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
+              <div class="col mb-4" v-for="item in searchProducts" :key="item.id">
+                <div class=" card product-card w-100 h-100" style="width: 18rem">
+                  <RouterLink :to="`/product/${item.id}`">
+                    <div class="product-img cursor-pointer" @click="getProduct(item.id)">
+                      <img
+                      style=" height: 180px; background-position: center"
+                      :src="item.imageUrl"
+                      class="card-img-top object-fit-cover"
+                      alt="productImages"/>
+                      <span class="seemore-text d-flex justify-content-center align-items-center text-white fw-bold">
+                        <i class="bi bi-search pe-1"></i>
+                          查看更多
+                      </span>
                     </div>
-                    <h5 class="card-title fw-bolder text-primary mb-3 ">{{ item.title }}</h5>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <div class="h5 text-secondary" v-if="!item.price">NTD {{ $filters.currency(item.origin_price) }}</div>
-                      <del class="h6 text-secondary" v-if="item.price">NTD {{ $filters.currency(item.origin_price) }}</del>
-                      <div class="h5 text-primary fw-bold" v-if="item.price"> NTD {{ $filters.currency(item.price) }}</div>
+                    <div class="card-body p-3">
+                      <div class="d-flex justify-content-start text-primary fw-bold">
+                        <p><i class="bi bi-house-heart me-2"></i>只想喝{{ item.category }}</p>
+                      </div>
+                      <h5 class="card-title fw-bolder text-primary mb-3 ">{{ item.title }}</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="h5 text-secondary" v-if="!item.price">NTD {{ $filters.currency(item.origin_price) }}</div>
+                        <del class="h6 text-secondary" v-if="item.price">NTD {{ $filters.currency(item.origin_price) }}</del>
+                        <div class="h5 text-primary fw-bold" v-if="item.price"> NTD {{ $filters.currency(item.price) }}</div>
+                      </div>
                     </div>
+                  </RouterLink>
+                  <div class="card-footer border-0 bg-transparent pt-0 pb-3">
+                    <button type="button" class="btn btn-outline-primary w-100"
+                    :class="{ 'disabled': isDone === item.id }"
+                      @click="addCart(item.id,qty)">
+                        <i class="bi bi-cart-fill"></i>
+                        加入購物車
+                      </button>
                   </div>
-                </RouterLink>
-                <div class="card-footer border-0 bg-transparent pt-0 pb-3">
-                  <button type="button" class="btn btn-outline-primary w-100"
-                  :class="{ 'disabled': isDone === item.id }"
-                    @click="addCart(item.id,qty)">
-                      <i class="bi bi-cart-fill"></i>
-                      加入購物車
-                    </button>
+                </div>
+              </div>
+            </div>
+            <div v-if="searchProducts.length === 0" class="col text-center mt-5">
+              <h2 class="fw-bolder">查無商品</h2>
+              <i class="bi bi-bag-x fs-1"></i>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="col-lg-9">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
+              <div class="col mb-4" v-for="item in filterProducts" :key="item.id">
+                <div class=" card product-card w-100 h-100" style="width: 18rem">
+                  <RouterLink :to="`/product/${item.id}`">
+                    <div class="product-img cursor-pointer" @click="getProduct(item.id)">
+                      <img
+                      style=" height: 180px; background-position: center"
+                      :src="item.imageUrl"
+                      class="card-img-top object-fit-cover"
+                      alt="productImages"/>
+                      <span class="seemore-text d-flex justify-content-center align-items-center text-white fw-bold">
+                        <i class="bi bi-search pe-1"></i>
+                          查看更多
+                      </span>
+                    </div>
+                    <div class="card-body p-3">
+                      <div class="d-flex justify-content-start text-primary fw-bold">
+                        <p><i class="bi bi-house-heart me-2"></i>只想喝{{ item.category }}</p>
+                      </div>
+                      <h5 class="card-title fw-bolder text-primary mb-3 ">{{ item.title }}</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="h5 text-secondary" v-if="!item.price">NTD {{ $filters.currency(item.origin_price) }}</div>
+                        <del class="h6 text-secondary" v-if="item.price">NTD {{ $filters.currency(item.origin_price) }}</del>
+                        <div class="h5 text-primary fw-bold" v-if="item.price"> NTD {{ $filters.currency(item.price) }}</div>
+                      </div>
+                    </div>
+                  </RouterLink>
+                  <div class="card-footer border-0 bg-transparent pt-0 pb-3">
+                    <button type="button" class="btn btn-outline-primary w-100"
+                    :class="{ 'disabled': isDone === item.id }"
+                      @click="addCart(item.id,qty)">
+                        <i class="bi bi-cart-fill"></i>
+                        加入購物車
+                      </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </section>
@@ -111,6 +174,7 @@ export default {
   data () {
     return {
       products: [],
+      search:'', // 搜尋
       categories: [], // 分類項目
       selectCategory: '', // 點選分類的商品
       isLoading: false,
@@ -121,6 +185,7 @@ export default {
     ...mapActions(cartStore, ['addCart']),
     getProducts () {
       const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/products/all`
+      this.search = ''
       this.isLoading = true
       this.$http.get(url).then((response) => {
         this.isLoading = false
@@ -163,6 +228,12 @@ export default {
     filterProducts () {
       //當選擇的選項和產品相同時會回傳回來
       return this.products.filter((item) => item.category.match(this.selectCategory))
+    },
+    // 搜尋商品
+    searchProducts () {
+      return this.products.filter(item =>{
+        return item.title.match(this.search)
+      })
     }
   },
   mounted() {
