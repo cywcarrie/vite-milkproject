@@ -137,6 +137,7 @@ export default {
       this.$http.post(url, { data: order })
         .then((response) => {
           this.$router.push(`/checkorder/${response.data.orderId}`)
+          this.getCart()
         }).catch(error => {
           Swal.fire({
             position: 'top',
