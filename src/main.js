@@ -33,7 +33,6 @@ configure({
 // 設定預設語系
 setLocale('zh_TW')
 
-
 app.use(createPinia())
 app.use(VueAxios, axios)
 app.use(router)
