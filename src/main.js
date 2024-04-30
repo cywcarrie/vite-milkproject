@@ -4,10 +4,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
-
 import "bootstrap"
 import 'bootstrap-icons/font/bootstrap-icons.css'
-
 import {
   Form, Field, ErrorMessage, defineRule, configure
 } from 'vee-validate'
