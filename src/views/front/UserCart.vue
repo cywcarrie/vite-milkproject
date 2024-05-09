@@ -108,8 +108,8 @@
 
 <script>
 import { RouterLink } from 'vue-router'
-import { mapState, mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore';
+import { mapState, mapActions } from 'pinia'
+import cartStore from '@/stores/cartStore'
 import FooterComponent from '@/components/FooterComponent.vue'
 
 export default {

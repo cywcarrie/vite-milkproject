@@ -90,6 +90,8 @@ import { RouterLink } from 'vue-router'
 import FooterComponent from '@/components/FooterComponent.vue'
 import Swal from 'sweetalert2'
 
+const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
+
 export default {
   components: {
     RouterLink,
@@ -106,7 +108,7 @@ export default {
   },
   methods: {
     getOrder () {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/order/${this.orderId}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/order/${this.orderId}`
       this.$http.get(url)
         .then((response) => {
           if (response.data.success) {
@@ -114,7 +116,7 @@ export default {
           }
         }).catch(error => {
           Swal.fire({
-            position: 'top',
+            position: 'top-end',
             icon: 'error',
             title: `${error.response.data.message}`,
             timer: 1500,
@@ -127,7 +129,7 @@ export default {
         })
     },
     payOrder () {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/pay/${this.orderId}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/pay/${this.orderId}`
       this.$http.post(url)
         .then((response) => {
           if (response.data.success) {
@@ -135,7 +137,7 @@ export default {
           }
         }).catch(error => {
           Swal.fire({
-            position: 'top',
+            position: 'top-end',
             icon: 'error',
             title: `${error.response.data.message}`,
             timer: 1500,

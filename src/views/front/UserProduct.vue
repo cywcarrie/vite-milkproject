@@ -86,12 +86,13 @@
 </template>
 
 <script>
-import { mapState , mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore';
+import { mapState , mapActions } from 'pinia'
+import cartStore from '@/stores/cartStore'
 import SwiperComponent from '@/components/SwiperComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import Swal from 'sweetalert2'
 
+const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
 export default {
   components: {
@@ -118,7 +119,7 @@ export default {
   methods: {
     ...mapActions(cartStore, ['addCart']),
     getProduct () {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/product/${this.id}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/product/${this.id}`
       this.isLoading = true
       this.$http.get(url).then((response) => {
         this.isLoading = false

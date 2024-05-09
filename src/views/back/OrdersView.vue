@@ -64,6 +64,8 @@ import OrderModal from '@/components/OrderModal.vue'
 import Pagination from '@/components/PaginationComponent.vue'
 import Swal from 'sweetalert2'
 
+const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
+
 export default {
   data () {
     return {
@@ -83,7 +85,7 @@ export default {
   methods: {
     getOrders (currentPage = 1) {
       this.currentPage = currentPage
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/orders?page=${currentPage}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/orders?page=${currentPage}`
       this.isLoading = true
       this.$http.get(url, this.tempProduct).then((response) => {
         this.orders = response.data.orders
@@ -103,7 +105,7 @@ export default {
     },
     updatePaid (item) {
       this.isLoading = true
-      const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/order/${item.id}`
+      const api = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/order/${item.id}`
       const paid = {
         is_paid: item.is_paid
       }
@@ -150,7 +152,7 @@ export default {
       })
     },
     delOrder () {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/order/${this.tempOrder.id}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/order/${this.tempOrder.id}`
       this.isLoading = true
       this.$http.delete(url).then((response) => {
         this.isLoading = false

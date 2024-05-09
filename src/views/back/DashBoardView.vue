@@ -10,6 +10,8 @@ import { RouterView } from 'vue-router'
 import Navbar from '@/components/AdminNavbar.vue'
 import Swal from 'sweetalert2'
 
+const { VITE_APP_API } = import.meta.env
+
 export default {
   components: {
     RouterView,
@@ -18,7 +20,7 @@ export default {
   created () {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
     this.$http.defaults.headers.common.Authorization = token
-    const api = `${import.meta.env.VITE_APP_API}api/user/check`
+    const api = `${VITE_APP_API}api/user/check`
     this.$http.post(api, this.user).then((response) => {
       if (!response.data.success) {
         this.$router.push('/login')

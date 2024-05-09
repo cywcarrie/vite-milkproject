@@ -38,6 +38,8 @@
 <script>
 import Swal from 'sweetalert2'
 
+const { VITE_APP_API } = import.meta.env
+
 export default {
   data () {
     return {
@@ -49,7 +51,7 @@ export default {
   },
   methods: { 
     signIn () {
-      const api = `${import.meta.env.VITE_APP_API}admin/signin`
+      const api = `${VITE_APP_API}admin/signin`
       this.$http.post(api, this.user)
         .then((response) => {
           if (response.data.success) {

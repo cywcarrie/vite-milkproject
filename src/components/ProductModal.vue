@@ -196,6 +196,8 @@
 <script>
 import modalMixin from '@/mixins/modalMixin'
 
+const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
+
 export default {
   props: {
     product: {
@@ -222,7 +224,7 @@ export default {
       const uploadedFile = this.$refs.fileInput.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', uploadedFile)
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/upload`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/upload`
       this.$http.post(url, formData).then((response) => {
         if (response.data.success) {
           this.tempProduct.imageUrl = response.data.imageUrl

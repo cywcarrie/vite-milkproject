@@ -61,6 +61,8 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
+const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
+
 export default {
   components: {
     Swiper,
@@ -75,7 +77,7 @@ export default {
   },
   methods: {
     getProducts () {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/products/all`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/products/all`
       this.isLoading = true
       this.$http.get(url).then((response) => {
         this.isLoading = false

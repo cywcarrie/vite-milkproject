@@ -28,13 +28,15 @@
 <script>
 import { RouterLink } from 'vue-router'
 
+const { VITE_APP_API } = import.meta.env
+
 export default {
   components: {
     RouterLink
   },
   methods: {
     logout () {
-      const api = `${import.meta.env.VITE_APP_API}logout`
+      const api = `${VITE_APP_API}logout`
       this.$http.post(api, this.user).then((response) => {
         if (response.data.success) {
           this.$router.push('/login')

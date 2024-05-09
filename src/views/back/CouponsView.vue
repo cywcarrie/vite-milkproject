@@ -51,6 +51,8 @@ import CouponModal from '@/components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
 import Swal from 'sweetalert2'
 
+const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
+
 export default {
   components: { CouponModal, DelModal },
   props: {
@@ -88,7 +90,7 @@ export default {
     },
     getCoupons () {
       this.isLoading = true
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/coupons`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/coupons`
       this.$http.get(url, this.tempProduct).then((response) => {
         this.coupons = response.data.coupons
         this.isLoading = false
@@ -96,7 +98,7 @@ export default {
     },
     updateCoupon (tempCoupon) {
       if (this.isNew) {
-        const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/coupon`
+        const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/coupon`
         this.$http.post(url, { data: tempCoupon }).then((response) => {
           if (response.data.success) {
             Swal.fire({
@@ -112,10 +114,22 @@ export default {
             })
             this.getCoupons()
             this.$refs.couponModal.hideModal()
-          }
+          }else {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: '新增優惠劵失敗',
+              timer: 1500,
+              toast: true,
+              color: "#14213d",
+              background: "#fef8e2",
+              showConfirmButton: false,
+              timerProgressBar: true
+            })
+          }    
         })
       } else {
-        const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
+        const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
         this.$http.put(url, { data: this.tempCoupon }).then((response) => {
           if (response.data.success) {
             Swal.fire({
@@ -131,7 +145,19 @@ export default {
             })
             this.getCoupons()
             this.$refs.couponModal.hideModal()
-          }
+          } else {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: '更新優惠劵失敗',
+              timer: 1500,
+              toast: true,
+              color: "#14213d",
+              background: "#fef8e2",
+              showConfirmButton: false,
+              timerProgressBar: true
+            })
+          }    
         }).catch((error) => {
           Swal.fire({
             position: 'top-end',
@@ -148,25 +174,37 @@ export default {
       }
     },
     delCoupon () {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
       this.isLoading = true
       this.$http.delete(url).then((response) => {
         if (response.data.success) {
           Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: '刪除優惠劵成功',
-              timer: 1500,
-              toast: true,
-              color: "#14213d",
-              background: "#fef8e2",
-              showConfirmButton: false,
-              timerProgressBar: true
-            })
+            position: 'top-end',
+            icon: 'success',
+            title: '刪除優惠劵成功',
+            timer: 1500,
+            toast: true,
+            color: "#14213d",
+            background: "#fef8e2",
+            showConfirmButton: false,
+            timerProgressBar: true
+          })
           const delComponent = this.$refs.delModal
           delComponent.hideModal()
           this.getCoupons()
-        }
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: '刪除優惠劵失敗',
+            timer: 1500,
+            toast: true,
+            color: "#14213d",
+            background: "#fef8e2",
+            showConfirmButton: false,
+            timerProgressBar: true
+          })
+        }    
       }).catch((error) => {
         Swal.fire({
           position: 'top-end',

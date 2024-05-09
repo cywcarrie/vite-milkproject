@@ -56,6 +56,8 @@ import Pagination from '@/components/PaginationComponent.vue'
 import DelModal from '@/components/DelModal.vue'
 import Swal from 'sweetalert2'
 
+const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
+
 export default {
   data () {
     return {
@@ -73,7 +75,7 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
-      const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/products/?page=${page}`
+      const api = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/products/?page=${page}`
       this.isLoading = true
       this.$http.get(api).then((response) => {
         this.isLoading = false
@@ -108,11 +110,11 @@ export default {
     updateProduct (item) {
       this.tempProduct = item
       // 新增
-      let api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product`
+      let api = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/product`
       let httpMethod = 'post'
       // 編輯
       if (!this.isNew) {
-        api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product/${item.id}`
+        api = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/product/${item.id}`
         httpMethod = 'put'
       }
       const productComponent = this.$refs.productModal
@@ -166,7 +168,7 @@ export default {
       delComponent.showModal()
     },
     delProduct () {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product/${this.tempProduct.id}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/product/${this.tempProduct.id}`
       const delComponent = this.$refs.delModal
       this.$http.delete(url).then((response) => {
         delComponent.hideModal()
@@ -175,7 +177,7 @@ export default {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: '成功刪除商品',
+            title: '刪除商品成功',
             timer: 1500,
             toast: true,
             color: "#14213d",

@@ -1,8 +1,9 @@
-import { defineStore } from 'pinia';
-import axios from 'axios';
-import router from '@/router';
+import { defineStore } from 'pinia'
+import axios from 'axios'
+import router from '@/router'
 import Swal from 'sweetalert2'
 
+const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
 export default defineStore('cartStore', {
   state: () => ({
@@ -10,13 +11,12 @@ export default defineStore('cartStore', {
     carts: [],
     total: 0,
     final_total: 0,
-    // coupon_code: '',
     cart: {},
     isDone: ''
   }),
   actions: {
     getCart () {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/cart`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/cart`
       this.isLoading = true
       axios.get(url).then((response) => {
         this.isLoading = false
@@ -36,7 +36,7 @@ export default defineStore('cartStore', {
       })
     },
     addCart (id, qty = 1) {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/cart`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/cart`
       this.isDone = id
       const cart = {
         product_id: id,
@@ -60,10 +60,22 @@ export default defineStore('cartStore', {
               showConfirmButton: false,
               timerProgressBar: true
             })
+          } else {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: '加入購物車失敗',
+              timer: 1500,
+              toast: true,
+              color: "#14213d",
+              background: "#fef8e2",
+              showConfirmButton: false,
+              timerProgressBar: true
+            })
           }
         }).catch(error => {
           Swal.fire({
-            position: 'top',
+            position: 'top-end',
             icon: 'error',
             title: `${error.response.data.message}`,
             timer: 1500,
@@ -76,7 +88,7 @@ export default defineStore('cartStore', {
       })
     },
     updateCart (item) {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/cart/${item.id}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/cart/${item.id}`
       this.isLoading = true
       const cart = {
         product_id: item.product_id,
@@ -102,7 +114,7 @@ export default defineStore('cartStore', {
       })
     }, 
     removeCartItem (id) {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/cart/${id}`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/cart/${id}`
       this.isLoading = true
       axios.delete(url).then((response) => {
         this.isLoading = false
@@ -119,10 +131,22 @@ export default defineStore('cartStore', {
             showConfirmButton: false,
             timerProgressBar: true
           })
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: '從購物車移除失敗',
+            timer: 1500,
+            toast: true,
+            color: "#14213d",
+            background: "#fef8e2",
+            showConfirmButton: false,
+            timerProgressBar: true
+          })
         }
       }).catch(error => {
         Swal.fire({
-          position: 'top',
+          position: 'top-end',
           icon: 'error',
           title: `${error.response.data.message}`,
           timer: 1500,
@@ -138,7 +162,7 @@ export default defineStore('cartStore', {
       router.push(`/product/${id}`)
     },
     addCouponCode (coupon_code) {
-      const url = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/coupon`
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/coupon`
       const coupon = {
         code: coupon_code
       }
@@ -151,6 +175,18 @@ export default defineStore('cartStore', {
             position: 'top-end',
             icon: 'success',
             title: '已套用優惠劵',
+            timer: 1500,
+            toast: true,
+            color: "#14213d",
+            background: "#fef8e2",
+            showConfirmButton: false,
+            timerProgressBar: true
+          })
+        } else{
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: '套用優惠劵失敗',
             timer: 1500,
             toast: true,
             color: "#14213d",
