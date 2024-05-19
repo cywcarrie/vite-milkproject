@@ -16,7 +16,7 @@
           </h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn btn-close btn-secondary"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
@@ -47,7 +47,7 @@
                   @change="uploadFile"
                 />
               </div>
-              <img class="img-fluid" :src="tempProduct.imageUrl" alt="tempProductImage" />
+              <img class="img-fluid" :src="tempProduct.imageUrl" :alt="`${tempProduct.title} 圖片`" />
               <div class="mt-5" v-if="tempProduct.images">
                 <div v-for="(image, key) in tempProduct.images" class="mb-3 input-group" :key="key">
                   <input
@@ -56,6 +56,9 @@
                     v-model="tempProduct.images[key]"
                     placeholder="請輸入連結"
                   />
+                  <div>
+                    <img class="img-fluid" :src="image" :alt="`${tempProduct.title} 圖片`" />
+                  </div>
                   <button
                     type="button"
                     class="btn btn-outline-danger"
