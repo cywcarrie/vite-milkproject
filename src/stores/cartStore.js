@@ -159,42 +159,16 @@ export default defineStore('cartStore', {
       })
     },
     deleteAllCart() {
-      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/carts`;
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/carts`
       this.isLoading = true
-      axios.delete(url)
-        .then((response) => {
-          this.isLoading = false;
-          if (response.data.success) {
-            this.getCart()
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: '已清空購物車',
-              timer: 1500,
-              toast: true,
-              color: "#14213d",
-              background: "#fef8e2",
-              showConfirmButton: false,
-              timerProgressBar: true
-            })
-          } else {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'error',
-              title: '清空購物車失敗',
-              timer: 1500,
-              toast: true,
-              color: "#14213d",
-              background: "#fef8e2",
-              showConfirmButton: false,
-              timerProgressBar: true
-            })
-          }
-        }).catch(error => {
+      axios.delete(url).then((response) => {
+        this.isLoading = false
+        if (response.data.success) {
+          this.getCart()
           Swal.fire({
             position: 'top-end',
-            icon: 'error',
-            title: `${error.response.data.message}`,
+            icon: 'success',
+            title: '已清空購物車',
             timer: 1500,
             toast: true,
             color: "#14213d",
@@ -202,7 +176,32 @@ export default defineStore('cartStore', {
             showConfirmButton: false,
             timerProgressBar: true
           })
-        })        
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: '清空購物車失敗',
+            timer: 1500,
+            toast: true,
+            color: "#14213d",
+            background: "#fef8e2",
+            showConfirmButton: false,
+            timerProgressBar: true
+          })
+        }
+      }).catch(error => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: `${error.response.data.message}`,
+          timer: 1500,
+          toast: true,
+          color: "#14213d",
+          background: "#fef8e2",
+          showConfirmButton: false,
+          timerProgressBar: true
+        })
+      })        
     },
     getProduct (id) {
       router.push(`/product/${id}`)
