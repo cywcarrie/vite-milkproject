@@ -1,5 +1,5 @@
 <template>
-  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70"/>
+  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70" />
    <swiper
     class="pb-5"
     :modules="modules"

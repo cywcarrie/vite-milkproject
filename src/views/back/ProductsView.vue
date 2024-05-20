@@ -1,5 +1,5 @@
 <template>
-  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70"/>
+  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70" />
   <div class="text-end mt-3">
     <button class="btn btn-primary" type="button"
     @click="openModal(true)">

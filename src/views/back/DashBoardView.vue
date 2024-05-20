@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import { RouterView } from 'vue-router'
 import Navbar from '@/components/AdminNavbar.vue'
 import Swal from 'sweetalert2'
 
@@ -14,7 +13,6 @@ const { VITE_APP_API } = import.meta.env
 
 export default {
   components: {
-    RouterView,
     Navbar,
   },
   created () {

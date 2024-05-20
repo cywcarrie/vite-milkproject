@@ -1,5 +1,5 @@
 <template>
-  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70"/>
+  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70" />
   <table class="table mt-4">
     <thead>
     <tr>

@@ -27,14 +27,10 @@
 </template>
 
 <script>
-import { RouterLink } from 'vue-router'
 import { mapState, mapActions } from 'pinia';
 import cartStore from '@/stores/cartStore.js';
 
 export default { 
-  components: {
-    RouterLink
-  },
   methods: {
     ...mapActions(cartStore, ['getCart']),
   },

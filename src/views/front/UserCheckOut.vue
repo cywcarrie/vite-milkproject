@@ -1,5 +1,5 @@
 <template>
-  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70"/>
+  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70" />
   <section class="mb-5">
     <div class="container">
       <div class="d-flex justify-content-center align-items-center my-5 position-relative banner banner2 container-fluid">
@@ -101,7 +101,6 @@
 </template>
 
 <script>
-import { RouterLink } from 'vue-router'
 import { mapState, mapActions } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import FooterComponent from '@/components/FooterComponent.vue'
@@ -111,7 +110,6 @@ const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
 export default {
   components: {
-    RouterLink,
     FooterComponent 
   },
   data () {

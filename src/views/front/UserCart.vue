@@ -1,19 +1,28 @@
 <template>
-  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70"/>
+  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70" />
   <section class="mb-5">
     <div class="container">
       <div class="d-flex justify-content-center align-items-center my-5 position-relative banner banner1 container-fluid">
-        <h2 class="position-absolute text-center text-white fw-bolder">我的購物車</h2>
+        <h2 class="position-absolute text-center text-white fw-bolder">購物車</h2>
       </div>
       <a href="#" title="回上一頁" class="text-black-50 hover-nav fw-bold mt-3" @click.prevent="$router.go(-1)"><i class="bi bi-arrow-left-square-fill fs-2"></i></a>
       <div class="d-flex justify-content-start mt-3 mb-4">
-        <RouterLink class="btn btn-primary fw-bold" to="/products"><i class="bi bi-house-heart me-2 pe-1 fs-5"></i>回到商品列表</RouterLink>
+        <RouterLink class="btn btn-primary fw-bold" to="/products"><i class="bi bi-house-heart pe-2 fs-5"></i>回到商品列表</RouterLink>
       </div>
       <template v-if="cart.total !== 0">
         <div class="d-flex justify-content-center mt-5">
           <h1 class="fs-2 fw-bold text-primary">我的購物車</h1>
         </div>
-        <div class="row mt-4 mb-5 bg-light rounded-2 py-3">
+        <div class="d-flex mt-4">
+          <div class="flex-fill text-end">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="deleteAllCart"><i class="bi bi-trash3 pe-1"></i>清空購物車
+            </button>
+          </div>
+        </div>           
+        <div class="row mt-4 mb-5 bg-light rounded-2 py-3">    
           <div class="col table-responsive mt-4 mb-4">
             <table class="table align-middle text-center table-light table-borderless">
               <thead class="table-secondary">
@@ -82,7 +91,7 @@
           </div>
           <div class="d-flex justify-content-end align-items-center mb-4">
             <button @click="copyCouponCode" class="btn btn-outline-primary" type="button">
-              <span><i class="bi bi-clipboard-fill pe-2"></i><span>複製優惠碼</span></span>
+              <span><i class="bi bi-clipboard-fill pe-1"></i><span>複製優惠碼</span></span>
             </button>
 
           </div>
@@ -107,14 +116,12 @@
 
 
 <script>
-import { RouterLink } from 'vue-router'
 import { mapState, mapActions } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import FooterComponent from '@/components/FooterComponent.vue'
 
 export default {
   components: {
-    RouterLink,
     FooterComponent
   },
   data () {
@@ -127,6 +134,7 @@ export default {
       'getCart',
       'updateCart',
       'removeCartItem',
+      'deleteAllCart',
       'getProduct',
       'addCouponCode',
       'copyCouponCode'

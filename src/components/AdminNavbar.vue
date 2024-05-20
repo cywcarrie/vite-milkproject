@@ -26,14 +26,10 @@
 </template>
 
 <script>
-import { RouterLink } from 'vue-router'
 
 const { VITE_APP_API } = import.meta.env
 
 export default {
-  components: {
-    RouterLink
-  },
   methods: {
     logout () {
       const api = `${VITE_APP_API}logout`

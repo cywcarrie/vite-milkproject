@@ -22,8 +22,6 @@
 </template>
 
 <script>
-// :pages="{ 頁碼資訊 }"
-// @emitPages="更新頁面事件"
 export default {
   props: ['pages'],
   methods: {

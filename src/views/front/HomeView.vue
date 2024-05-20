@@ -1,5 +1,4 @@
 <template>
-<section>
   <div class="home d-flex justify-content-center align-items-center position-relative">
     <div class="text-center text-white mb-5 text-nowrap" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="50">
       <h2 class="text-secondary text-uppercase mb-3 fs-1 lh-lg fw-bolder">Funnie Milk</h2>
@@ -14,16 +13,4 @@
       </RouterLink>
     </div>
   </div>
-</section>
 </template>
-
-<script>
-import { RouterLink } from 'vue-router'
-
-export default {
-  components: {
-    RouterLink
-  }
-}
-  
-</script>
