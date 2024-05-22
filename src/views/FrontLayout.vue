@@ -57,7 +57,7 @@ export default {
     }
   }
 
-@media screen and (max-width:767px){
+@media screen and (max-width: 767.98px){
   .top{
     bottom: 15px;
     right: 15px;
