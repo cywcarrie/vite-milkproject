@@ -174,9 +174,9 @@ export default {
   data () {
     return {
       products: [],
-      search:'', // 搜尋
-      categories: [], // 分類項目
-      selectCategory: '', // 點選分類的商品
+      search:'', 
+      categories: [], 
+      selectCategory: '', 
       isLoading: false,
       id: '',
     }
@@ -214,7 +214,6 @@ export default {
     getCategories () {
       const categories = new Set();
       this.products.forEach((item) => {
-        // 將全部商品的分類加至上方建立的 categories 變數上
         categories.add(item.category)
       });
       this.categories = [...categories]
@@ -226,10 +225,8 @@ export default {
   computed: {
     ...mapState(cartStore, ['isDone']),
     filterProducts () {
-      //當選擇的選項和產品相同時會回傳回來
       return this.products.filter((item) => item.category.match(this.selectCategory))
     },
-    // 搜尋商品
     searchProducts () {
       return this.products.filter(item =>{
         return item.title.match(this.search)
