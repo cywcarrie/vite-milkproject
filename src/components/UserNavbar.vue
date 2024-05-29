@@ -12,13 +12,13 @@
         <div class="d-flex d-lg-none d-md-block">
           <RouterLink to="/cart"  class="nav-link text-primary hover-nav position-relative">
             <i class="bi bi-cart-fill fs-3"></i>
-            <span class="badge text-white bg-danger position-absolute" style="top:-11px; right:-8px;" v-if="cart.final_total > 0">$ {{ $filters.currency(cart.final_total) }}</span>
+            <span class="badge text-white bg-danger position-absolute navbar-badge-position" v-if="cart.final_total > 0">$ {{ $filters.currency(cart.final_total) }}</span>
           </RouterLink>
         </div>
         <div class="d-flex d-none d-lg-block">
           <RouterLink to="/cart"  class="nav-link text-primary hover-nav position-relative fs-5"
           >購物車<i class="bi bi-cart-fill fs-3 ps-1"></i>
-          <span class="badge text-white bg-danger position-absolute" style="top:-11px; right:-15px;" v-if="cart.final_total > 0">$ {{ $filters.currency(cart.final_total) }}</span>
+          <span class="badge text-white bg-danger position-absolute navbar-badge-position" v-if="cart.final_total > 0">$ {{ $filters.currency(cart.final_total) }}</span>
           </RouterLink>
         </div>
       </div>

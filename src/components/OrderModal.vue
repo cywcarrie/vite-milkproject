@@ -17,7 +17,7 @@
               <table class="table">
                 <tbody v-if="tempOrder.user">
                   <tr>
-                    <th style="width: 100px;">姓名</th>
+                    <th class="order-modal-table">姓名</th>
                     <td>{{ tempOrder.user.name }}</td>
                   </tr>
                   <tr>
@@ -40,7 +40,7 @@
               <table class="table">
                 <tbody>
                   <tr>
-                    <th style="width: 100px">訂單編號</th>
+                    <th class="order-modal-table">訂單編號</th>
                     <td>{{ tempOrder.id }}</td>
                   </tr>
                   <tr>

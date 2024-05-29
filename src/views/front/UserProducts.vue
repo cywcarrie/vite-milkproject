@@ -42,10 +42,9 @@
               商品系列
             </button>
             <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
-              <li @click.prevent="selectCategory = ''" :class="{ active: selectCategory === '' }"><button class="dropdown-item fw-bold" type="button"><i class="bi bi-house-heart me-2 "></i>全部商品</button></li>
-              <li v-for="item in categories" :key="item"
-                :class="{ active: item === selectCategory }"
-                @click.prevent="selectCategory = item"><button class="dropdown-item fw-bold" type="button"><i class="bi bi-house-heart me-2"></i>只想喝{{ item }}</button></li>
+              <li><button @click="selectCategory = ''" :class="{ active: selectCategory === '' }" class="dropdown-item fw-bold" type="button"><i class="bi bi-house-heart me-2 "></i>全部商品</button></li>
+              <li><button v-for="item in categories" :key="item" :class="{ active: item === selectCategory }"
+                @click="selectCategory = item" class="dropdown-item fw-bold" type="button"><i class="bi bi-house-heart me-2"></i>只想喝{{ item }}</button></li>
             </ul>
           </div>
           <div class="input-group mt-4 mb-3">
@@ -69,11 +68,10 @@
             </div>            
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
               <div class="col mb-4" v-for="item in searchProducts" :key="item.id">
-                <div class=" card product-card w-100 h-100" style="width: 18rem">
+                <div class=" card product-card w-100 h-100">
                   <RouterLink :to="`/product/${item.id}`">
                     <div class="product-img cursor-pointer" @click="getProduct(item.id)">
                       <img
-                      style=" height: 180px; background-position: center"
                       :src="item.imageUrl"
                       class="card-img-top object-fit-cover"
                       alt="productImages"/>
@@ -115,11 +113,10 @@
           <div class="col-lg-9">
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
               <div class="col mb-4" v-for="item in filterProducts" :key="item.id">
-                <div class=" card product-card w-100 h-100" style="width: 18rem">
+                <div class=" card product-card w-100 h-100">
                   <RouterLink :to="`/product/${item.id}`">
                     <div class="product-img cursor-pointer" @click="getProduct(item.id)">
                       <img
-                      style=" height: 180px; background-position: center"
                       :src="item.imageUrl"
                       class="card-img-top object-fit-cover"
                       alt="productImages"/>

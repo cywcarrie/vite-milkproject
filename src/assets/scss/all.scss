@@ -7,9 +7,12 @@
 // Then add additional custom code here
 @import "./base/base";
 @import "./components/navbar";
+@import "./components/footer";
 @import "./components/banner";
+@import "./components/home";
+@import "./components/cart";
+@import "./components/check";
 @import "./components/card";
 @import "./components/swiper";
-@import "./components/home";
-@import "./components/check";
 @import "./components/toast";
+@import "./components/orderModal";

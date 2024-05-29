@@ -1,4 +1,5 @@
 .product-card{
+  width: 18rem;
   transition: all 0.4s ease;
   overflow: hidden;
   &:hover{
@@ -25,6 +26,8 @@
   }
   img {
     transition: all 0.4s ease;
+    height: 180px; 
+    background-position: center;
   }
 }
 .seemore-text {

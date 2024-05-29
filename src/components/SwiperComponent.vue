@@ -30,9 +30,8 @@
   >
     <swiper-slide v-for="item in products" :key="item.id">
       <RouterLink :to="`/product/${item.id}`">
-        <div class=" card product-card box-shadow w-100 h-100" style="width: 18rem">
+        <div class=" card product-card box-shadow w-100 h-100">
           <img
-          style=" height: 180px; background-position: center"
             :src="item.imageUrl"
             class="card-img-top object-fit-cover"
             alt="swiperImage"
