@@ -31,7 +31,7 @@
               type="button"
               class="list-group-item list-group-item-action fw-bold"
               :class="{ active: item === selectCategory }"
-              @click.prevent="selectCategory = item">
+              @click="selectCategory = item">
               <i class="bi bi-house-heart me-2"></i>
               只想喝{{ item }}
               </button>              
