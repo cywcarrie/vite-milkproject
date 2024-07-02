@@ -14,7 +14,7 @@
       </div>
       <div class="row my-5 py-5 bg-light rounded-2">
         <div class="col-lg-7">
-          <h2 class="text-center fw-bold mb-4">商品明細</h2>
+          <h3 class="text-center fw-bold mb-4">商品明細</h3>
           <div class="table-responsive-md mb-5 mb-lg-0">
             <table class="table align-middle table-light table-borderless">
               <thead class="text-center table-secondary">
@@ -29,7 +29,7 @@
                   <td class="table-nowrap fw-bold text-primary">{{ item.product.title }}</td>
                   <td>{{ item.qty }}</td>
                   <td class="text-end text-nowrap">
-                    <small v-if="cart.final_total !== cart.total" class="text-success text-end">優惠價：</small>
+                    <small v-if="cart.final_total !== cart.total" class="text-danger text-end">優惠價：</small>
                     {{ $filters.currency(item.final_total) }}
                   </td>
                 </tr>
@@ -40,19 +40,19 @@
                 <td class="text-end fs-5 text-primary fw-bold">{{ $filters.currency(cart.total) }}</td>
               </tr>
               <tr v-if="cart.final_total !== cart.total">
-                <td colspan="2" class="text-end text-success fs-5">優惠價</td>
-                <td class="text-end text-success fs-5 fw-bold">{{ $filters.currency(cart.final_total) }}</td>
+                <td colspan="2" class="text-end text-danger fs-5">優惠價</td>
+                <td class="text-end text-danger fs-5 fw-bold">{{ $filters.currency(cart.final_total) }}</td>
               </tr>
               </tfoot>
             </table>
           </div>
         </div>
         <div class="row col-lg-5">
-          <h2 class="text-center fw-bold mb-4">訂購人資訊</h2>
+          <h3 class="text-center fw-bold mb-4">訂購人資訊</h3>
           <FormVue v-slot="{ errors }"
                 @submit="createOrder">
             <div class="mb-3">
-              <label for="email" class="form-label">Email<small class="ps-1 text-danger">(必填)</small></label>
+              <label for="email" class="form-label">Email<small class="ps-1 text-danger fw-bold">*</small></label>
               <FieldVue id="email" name="email" type="email" class="form-control"
               :class="{ 'is-invalid': errors['email'] }"
               placeholder="請輸入 Email" rules="email|required"
@@ -60,7 +60,7 @@
               <ErrorMessage name="email" class="invalid-feedback" />
             </div>
             <div class="mb-3">
-              <label for="name" class="form-label">訂購人姓名<small class="ps-1 text-danger">(必填)</small></label>
+              <label for="name" class="form-label">訂購人姓名<small class="ps-1 text-danger fw-bold">*</small></label>
               <FieldVue id="name" name="姓名" type="text" class="form-control"
               :class="{ 'is-invalid': errors['姓名'] }"
               placeholder="請輸入姓名" rules="required"
@@ -68,7 +68,7 @@
               <ErrorMessage name="姓名" class="invalid-feedback" />
             </div>
             <div class="mb-3">
-              <label for="tel" class="form-label">訂購人電話<small class="ps-1 text-danger">(必填)</small></label>
+              <label for="tel" class="form-label">訂購人電話<small class="ps-1 text-danger fw-bold">*</small></label>
               <FieldVue id="tel" name="電話" type="tel" class="form-control"
               :class="{ 'is-invalid': errors['電話'] }"
               placeholder="請輸入電話" rules="required"
@@ -76,7 +76,7 @@
               <ErrorMessage name="電話" class="invalid-feedback" />
             </div>
             <div class="mb-3">
-              <label for="address" class="form-label">訂購人地址<small class="ps-1 text-danger">(必填)</small></label>
+              <label for="address" class="form-label">訂購人地址<small class="ps-1 text-danger fw-bold">*</small></label>
               <FieldVue id="address" name="地址" type="text" class="form-control"
               :class="{ 'is-invalid': errors['地址'] }"
               placeholder="請輸入地址" rules="required"

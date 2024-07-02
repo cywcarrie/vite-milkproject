@@ -11,94 +11,124 @@
       </div>
       <template v-if="cart.total !== 0">
         <div class="d-flex justify-content-center mt-5">
-          <h1 class="fs-2 fw-bold text-primary">我的購物車</h1>
-        </div>
-        <div class="d-flex mt-4">
-          <div class="flex-fill text-end">
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              @click="deleteAllCart"><i class="bi bi-trash3 pe-1"></i>清空購物車
-            </button>
-          </div>
-        </div>           
-        <div class="row mt-4 mb-5 bg-light rounded-2 py-3">    
-          <div class="col table-responsive mt-4 mb-4">
-            <table class="table align-middle text-center table-light table-borderless">
-              <thead class="table-secondary">
-                <tr class="table-nowrap">
-                  <th class="text-nowrap">商品名稱</th>
-                  <th class="text-nowrap">數量</th>
-                  <th class="text-end">單價</th>
-                  <th class="text-end">小計</th>
-                  <th class="text-end"></th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                <tr class="table-nowrap" v-for="item in cart.carts" :key="item.id">
-                  <td class="text-nowrap fw-bold text-primary cursor-pointer hover-nav" @click="getProduct(item.product_id)">
-                    {{ item.product.category }} | {{ item.product.title }}
-                    <div class="text-success" v-if="item.coupon">
-                      已套用優惠券
-                    </div>
-                  </td>
-                  <td class="text-nowrap">
-                    <div class="d-flex justify-content-center">
-                      <div class="input-group input-group-sm cart-qty">
-                        <input type="number" class="form-control"
-                        min="1"
-                        @change="updateCart(item)"
-                        v-model.number="item.qty">
-                        <div class="input-group-text">/ {{ item.product.unit }}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="text-end text-nowrap">{{ $filters.currency(item.product.price) }}</td>
-                  <td class="text-end text-nowrap">
-                    <small v-if="cart.final_total !== cart.total" class="text-success">優惠價：</small>
-                    {{ $filters.currency(item.final_total) }}
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-outline-primary btn-sm"
-                    @click="removeCartItem(item.id)">
-                    <i class="bi bi-trash3"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-              <tr>
-                <td colspan="3" class="text-end fs-4">總計</td>
-                <td class="text-end fs-4 text-primary fw-bold">{{ $filters.currency(cart.total) }}</td>
-              </tr>
-              <tr v-if="cart.final_total !== cart.total">
-                <td colspan="3" class="text-end text-success fs-4">優惠價：</td>
-                <td class="text-end text-success fs-4 fw-bold">{{ $filters.currency(cart.final_total) }}</td>
-              </tr>
-              </tfoot>
-            </table>
-          </div>
-          <div class="d-flex justify-content-end align-items-center">
-            <div class="input-group mb-3 coupon-input" v-if="cart.total !== 0">
-              <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
-              <button class="btn btn-primary" type="button" @click="addCouponCode(coupon_code)">
-                套用優惠碼
+          <h2 class="fs-2 fw-bold text-primary">我的購物車</h2>
+        </div>     
+        <div class="row flex-row mt-4 mb-5 py-5 bg-light rounded-2">
+          <div class="col-12 col-lg-8 mb-5 mb-lg-0">            
+            <div class="text-end mb-4">
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                @click="deleteAllCart"><i class="bi bi-trash pe-1"></i>清空購物車
               </button>
             </div>
-          </div>
-          <div class="d-flex justify-content-end align-items-center mb-2">
-            <div class="fs-6 fw-bold text-primary"><i class="bi bi-bag-check-fill pe-2"></i>輸入優惠碼 <span class="fw-bold text-secondary">funniemilk</span> 即享 <span class="fw-bold text-secondary">9 </span>折優惠</div>
-          </div>
-          <div class="d-flex justify-content-end align-items-center mb-4">
-            <button @click="copyCouponCode" class="btn btn-outline-primary" type="button">
-              <span><i class="bi bi-clipboard-fill pe-1"></i><span>複製優惠碼</span></span>
-            </button>
-
-          </div>
-          <div class="d-flex justify-content-between mt-4 mb-4" v-if="cart.total !== 0">
-            <RouterLink class="btn btn-outline-primary" to="/products">繼續選購</RouterLink>
-            <RouterLink class="btn btn-secondary ms-auto check-btn" to="/checkout">前往結帳</RouterLink>
-          </div>
+            <div class="bg-light">
+              <table class="table align-middle text-center table-light table-borderless">
+                <thead class="table-secondary">
+                  <tr>
+                    <th class="text-nowrap">商品名稱</th>
+                    <th class="text-nowrap">數量</th>
+                    <th class="text-nowrap">小計</th>
+                    <th class="text-end"></th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr class="table-nowrap" v-for="item in cart.carts" :key="item.id">
+                    <td class="fw-bold text-primary cursor-pointer hover-nav" @click="getProduct(item.product_id)">
+                    {{ item.product.title }}
+                    </td>
+                    <td class="text-nowrap">
+                      <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center align-items-center me-1 cart-qty-width"
+                          :style="{ cursor: item.qty === 1 ? 'not-allowed' : 'pointer' }">
+                          <button
+                          type="button"
+                          class="btn btn-sm btn-outline-primary rounded-0"
+                          :disabled="item.qty === 1"
+                          @click="item.qty-- ; updateCart(item)">
+                          <i class="bi bi-dash"></i>
+                          </button>
+                          <input
+                          type="form"
+                          class="form-control text-center rounded-0 border-0 bg-light"
+                          min="1"
+                          max="99"
+                          v-model.number="item.qty"/>
+                          <button type="button" class="btn btn-sm btn-outline-primary rounded-0" :disabled="item.qty === 99" @click="item.qty++ ; updateCart(item)">
+                            <i class="bi bi-plus"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-nowrap">
+                       {{ $filters.currency(item.total) }}
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-center">
+                        <button type="button" class="btn border-0 d-none d-md-block"
+                        @click="removeCartItem(item.id)">
+                        <i class="bi bi-trash-fill text-primary"></i>
+                        </button>
+                        <button type="button" class="btn border-0 d-block d-md-none"
+                        @click="removeCartItem(item.id)">
+                        <i class="bi bi-x-lg text-danger"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div> 
+          <div class="col-12 col-lg-4">
+            <div class="card border-primary">
+              <div class="card-header bg-secondary">
+                <h4 class="text-center text-dark fw-bold">總價</h4>
+              </div>
+              <div class="card-body">
+                <ul class="list-unstyled fs-6 fs-md-5 border-bottom mb-0">
+                  <li class="d-flex align-items-center justify-content-between mb-4">
+                    <div>總計</div>
+                    <div>NT${{ $filters.currency(cart.total) }}</div>
+                  </li>
+                  <li v-if="cart.final_total !== cart.total"
+                  class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="text-danger">優惠價</div>
+                    <div class="text-danger">NT${{ $filters.currency(cart.final_total) }}</div>
+                  </li>
+                </ul>
+                <div class="mt-4 border-bottom">
+                  <div class="d-flex align-items-center mb-4">
+                    <div class="fw-bold">限時優惠 9 折</div>
+                    <div class="d-flex rounded-pill overflow-hidden
+                    border border-2 ms-2">
+                      <span
+                        class="d-flex align-items-center bg-dark
+                      text-white fs-6 ps-3 pe-2 py-1 fw-bold"
+                      >
+                        funniemilk
+                      </span>
+                      <button @click="copyCouponCode" class="btn d-flex align-items-center ps-2 pe-3 py-1 border-0 rounded-end rounded-0" type="button">
+                        <i class="bi bi-copy text-dark"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="input-group mb-3 coupon-input" v-if="cart.total !== 0">
+                      <span class="d-flex align-items-center me-3">優惠劵</span><input type="text" class="form-control border-primary rounded-start" v-model="coupon_code" placeholder="請輸入優惠碼">
+                      <button class="btn btn-outline-primary" type="button"  @click="addCouponCode(coupon_code)">
+                          送出
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <h4 class="fs-3 fs-md-2 fw-bold text-center pt-4 pb-2 pt-md-5 pb-md-3">
+                  NT${{ $filters.currency(cart.final_total) }}
+                </h4>
+              </div>
+              <RouterLink v-if="cart.total !== 0" class="btn btn-primary rounded-0 rounded-bottom py-3 fs-5 fs-md-4" to="/checkout">前往結帳</RouterLink>                  
+            </div>
+          </div>     
         </div>
       </template>
       <template v-if="cart.total === 0">

@@ -42,9 +42,9 @@
             </div>
             <h4 class="card-title fw-bolder mb-4">{{ item.title }}</h4>
             <div class="d-flex justify-content-end align-items-center mb-3">
-              <div class="fs-4 text-black-50" v-if="!item.price">NTD {{ $filters.currency(item.origin_price) }}</div>
-              <del class="fs-5 text-black-50" v-if="item.price"> NTD {{ $filters.currency(item.origin_price) }}</del>
-              <div class="fs-4 text-danger fw-bold ps-2" v-if="item.price"> NTD {{ $filters.currency(item.price) }}</div>
+              <div class="fs-4 text-black-50" v-if="!item.price">NT${{ $filters.currency(item.origin_price) }}</div>
+              <del class="fs-5 text-black-50" v-if="item.price"> NT${{ $filters.currency(item.origin_price) }}</del>
+              <div class="fs-4 text-danger fw-bold ps-2" v-if="item.price"> NT${{ $filters.currency(item.price) }}</div>
             </div>
           </div>
         </div>

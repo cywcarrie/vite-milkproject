@@ -37,11 +37,11 @@
             <p class="fw-bold"><i class="bi bi-house-heart pe-2"></i>專業品質管理技術，嚴格把關維持高品質</p>
           </div>
           <div class="d-flex justify-content-end align-items-center mt-3 pt-3">
-            <div class="fs-4 text-black-50" v-if="!product.price">NTD {{  $filters.currency(product.origin_price) }}</div>
-            <del class="fs-5 text-black-50" v-if="product.price">NTD {{ $filters.currency(product.origin_price) }}</del>
+            <div class="fs-4 text-black-50" v-if="!product.price">NT${{  $filters.currency(product.origin_price) }}</div>
+            <del class="fs-5 text-black-50" v-if="product.price">NT${{ $filters.currency(product.origin_price) }}</del>
           </div>
           <div class="d-flex justify-content-end align-items-center mb-3">
-            <div class="fs-4 ms-2 text-primary fw-bold" v-if="product.price"><span class="text-danger fs-3">優惠價:</span> NTD {{ $filters.currency(product.price) }}</div>
+            <div class="fs-4 ms-2 text-primary fw-bold" v-if="product.price"><span class="text-danger fs-3">優惠價:</span> NT${{ $filters.currency(product.price) }}</div>
           </div>
           <div>
             <div class="d-flex justify-content-end align-items-center">
@@ -63,7 +63,9 @@
                   max="99"
                   v-model.number="qty"/>
                 </label>
-                <button type="button" class="btn btn-primary rounded-0 rounded-end" @click="qty++">
+                <button type="button" class="btn btn-primary rounded-0 rounded-end" 
+                @click="qty++"
+                :disabled="qty === 99">
                   <i class="bi bi-plus"></i>
                 </button>
               </div>
@@ -77,7 +79,7 @@
     </div>
     <div class=" mt-5 bg-white py-5">
       <div class="container">
-        <h2 class="text-center fw-bolder mb-5 text-primary text-nowrap">您可能有興趣</h2>
+        <h2 class="text-center fw-bolder mb-5 text-primary text-nowrap">推薦商品</h2>
         <SwiperComponent />
       </div>
     </div>

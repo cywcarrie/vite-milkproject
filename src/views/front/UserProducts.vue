@@ -86,9 +86,9 @@
                       </div>
                       <h5 class="card-title fw-bolder text-primary mb-3 ">{{ item.title }}</h5>
                       <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="h5 text-secondary" v-if="!item.price">NTD {{ $filters.currency(item.origin_price) }}</div>
-                        <del class="h6 text-secondary" v-if="item.price">NTD {{ $filters.currency(item.origin_price) }}</del>
-                        <div class="h5 text-primary fw-bold" v-if="item.price"> NTD {{ $filters.currency(item.price) }}</div>
+                        <div class="h5 text-secondary" v-if="!item.price">NT${{ $filters.currency(item.origin_price) }}</div>
+                        <del class="h6 text-secondary" v-if="item.price">NT${{ $filters.currency(item.origin_price) }}</del>
+                        <div class="h5 text-primary fw-bold" v-if="item.price"> NT${{ $filters.currency(item.price) }}</div>
                       </div>
                     </div>
                   </RouterLink>
@@ -131,9 +131,9 @@
                       </div>
                       <h5 class="card-title fw-bolder text-primary mb-3 ">{{ item.title }}</h5>
                       <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="h5 text-secondary" v-if="!item.price">NTD {{ $filters.currency(item.origin_price) }}</div>
-                        <del class="h6 text-secondary" v-if="item.price">NTD {{ $filters.currency(item.origin_price) }}</del>
-                        <div class="h5 text-primary fw-bold" v-if="item.price"> NTD {{ $filters.currency(item.price) }}</div>
+                        <div class="h5 text-secondary" v-if="!item.price">NT${{ $filters.currency(item.origin_price) }}</div>
+                        <del class="h6 text-secondary" v-if="item.price">NT${{ $filters.currency(item.origin_price) }}</del>
+                        <div class="h5 text-primary fw-bold" v-if="item.price"> NT${{ $filters.currency(item.price) }}</div>
                       </div>
                     </div>
                   </RouterLink>
