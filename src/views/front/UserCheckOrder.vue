@@ -24,9 +24,11 @@
             <form class="col-lg-6" @submit.prevent="payOrder">
               <table class="table align-middle table-light table-borderless mb-4">
                 <thead class="text-center bg-light">
-                <th class="text-nowrap">商品名稱</th>
-                <th class="text-center text-nowrap">數量</th>
-                <th class="text-nowrap">價格</th>
+                  <tr>
+                    <th class="text-nowrap">商品名稱</th>
+                    <th class="text-center text-nowrap">數量</th>
+                    <th class="text-nowrap">價格</th>
+                  </tr>
                 </thead>
                 <tbody>
                 <tr v-for="item in order.products" :key="item.id">

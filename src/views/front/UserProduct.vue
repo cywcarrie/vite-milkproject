@@ -43,37 +43,35 @@
           <div class="d-flex justify-content-end align-items-center mb-3">
             <div class="fs-4 ms-2 text-primary fw-bold" v-if="product.price"><span class="text-danger fs-3">優惠價:</span> NT${{ $filters.currency(product.price) }}</div>
           </div>
-          <div>
-            <div class="d-flex justify-content-end align-items-center">
-              <div class="d-flex align-items-center me-1"
-              :style="{ cursor: qty === 1 ? 'not-allowed' : 'pointer' }">
-                <button
-                  type="button"
-                  class="btn btn-primary rounded-0 rounded-start"
-                  :disabled="qty === 1"
-                  @click="qty--">
-                  <i class="bi bi-dash"></i>
-                </button>
-                <label for="qty">
-                  <input
-                  type="form"
-                  id="qty"
-                  class="form-control text-center rounded-0"
-                  min="1"
-                  max="99"
-                  v-model.number="qty"/>
-                </label>
-                <button type="button" class="btn btn-primary rounded-0 rounded-end" 
-                @click="qty++"
-                :disabled="qty === 99">
-                  <i class="bi bi-plus"></i>
-                </button>
-              </div>
-              <button type="button" class="btn btn-secondary ms-1 text-nowrap" @click="addCart(product.id,qty)">
-                <i class="bi bi-cart-fill pe-1"></i>加入購物車
+          <div class="d-flex justify-content-end align-items-center">
+            <div class="d-flex align-items-center me-1"
+            :style="{ cursor: qty === 1 ? 'not-allowed' : 'pointer' }">
+              <button
+                type="button"
+                class="btn btn-primary rounded-0 rounded-start"
+                :disabled="qty === 1"
+                @click="qty--">
+                <i class="bi bi-dash"></i>
               </button>
-            </div>              
-          </div>
+              <label for="qty">
+                <input
+                type="form"
+                id="qty"
+                class="form-control text-center rounded-0"
+                min="1"
+                max="99"
+                v-model.number="qty"/>
+              </label>
+              <button type="button" class="btn btn-primary rounded-0 rounded-end" 
+              @click="qty++"
+              :disabled="qty === 99">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+            <button type="button" class="btn btn-secondary ms-1 text-nowrap" @click="addCart(product.id,qty)">
+              <i class="bi bi-cart-fill pe-1"></i>加入購物車
+            </button>
+          </div>              
         </div>
       </div>
     </div>
