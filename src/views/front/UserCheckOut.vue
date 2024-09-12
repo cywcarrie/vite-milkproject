@@ -71,7 +71,7 @@
               <label for="tel" class="form-label">訂購人電話<small class="ps-1 text-danger fw-bold">*</small></label>
               <FieldVue id="tel" name="電話" type="tel" class="form-control"
               :class="{ 'is-invalid': errors['電話'] }"
-              placeholder="請輸入電話" rules="required"
+              placeholder="請輸入電話" rules="required|numeric|min:8|max:10"
               v-model="form.user.tel" />
               <ErrorMessage name="電話" class="invalid-feedback" />
             </div>
