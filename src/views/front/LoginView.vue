@@ -57,14 +57,24 @@ export default {
           if (response.data.success) {
             const { token, expired } = response.data
             document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: '登入成功',
+              timer: 1500,
+              toast: true,
+              color: "#14213d",
+              background: "#fef8e2",
+              showConfirmButton: false,
+              timerProgressBar: true
+            })
             this.$router.push('/admin/products')
           }
-        }).catch(() => {
+        }).catch((error) => {
           Swal.fire({
             position: 'top-end',
             icon: 'error',
-            title: '登入失敗',
-            text: '抱歉，出現系統問題，請聯絡我們！',
+            title: `${error.response.data.message}`,
             timer: 1500,
             toast: true,
             color: "#14213d",

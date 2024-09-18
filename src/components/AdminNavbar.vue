@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 
 const { VITE_APP_API } = import.meta.env
 
@@ -35,8 +36,31 @@ export default {
       const api = `${VITE_APP_API}logout`
       this.$http.post(api, this.user).then((response) => {
         if (response.data.success) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '登出成功',
+            timer: 1500,
+            toast: true,
+            color: "#14213d",
+            background: "#fef8e2",
+            showConfirmButton: false,
+            timerProgressBar: true
+          })
           this.$router.push('/login')
         }
+      }).catch((error) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: `${error.response.data.message}`,
+            timer: 1500,
+            toast: true,
+            color: "#14213d",
+            background: "#fef8e2",
+            showConfirmButton: false,
+            timerProgressBar: true
+          })
       })
     }
   }

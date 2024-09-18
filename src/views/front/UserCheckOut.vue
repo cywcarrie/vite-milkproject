@@ -7,9 +7,9 @@
       </div>
       <div class="d-flex justify-content-center align-items-center my-5 mt-3">
         <h5 class="fw-bold mb-0 text-secondary pay-header active">填寫資料</h5>
-        <i class="bi bi-caret-right-fill fs-5 mx-2 text-secondary"></i>
-        <h5 class="fw-bold mb-0 text-secondary pay-header" >確認付款</h5>
-        <i class="bi bi-caret-right-fill fs-5 mx-2 text-secondary"></i>
+        <i class="bi bi-caret-right-fill fs-5 mx-1 mx-md-2 text-secondary"></i>
+        <h5 class="fw-bold mb-0 text-secondary pay-header">確認付款</h5>
+        <i class="bi bi-caret-right-fill fs-5 mx-1 mx-md-2 text-secondary"></i>
         <h5 class="fw-bold mb-0 text-secondary pay-header">訂單完成</h5>
       </div>
       <div class="row my-5 py-5 bg-light rounded-2">
