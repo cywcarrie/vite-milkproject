@@ -69,6 +69,18 @@ export default {
               timerProgressBar: true
             })
             this.$router.push('/admin/products')
+          } else {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: '登入失敗',
+              timer: 1500,
+              toast: true,
+              color: '#14213d',
+              background: '#fef8e2',
+              showConfirmButton: false,
+              timerProgressBar: true
+            })
           }
         }).catch((error) => {
           Swal.fire({
