@@ -1,6 +1,4 @@
-# vite-milkproject
-
-This template should help get you started developing with Vue 3 in Vite.
+# vite-milkproject - 鮮乳購物電商網站
 
 ## 專案說明
 
@@ -16,26 +14,58 @@ This template should help get you started developing with Vue 3 in Vite.
 - 透過 Pinia 進行狀態管理，負責跨元件的數據操作與共享
 - 利用 Bootstrap 5 和 SCSS 打造響應式界面，提升使用者體驗
 
-## Project Setup
+## 網站功能
+
+- 前台
+   - 首頁
+   - 商品列表：商品分類、用關鍵字搜尋產品
+   - 商品詳情
+   - 購物車：新增、刪除、修改功能
+   - 結帳：建立及送出訂單
+- 後台
+   - 商品管理：新增、修改、刪除、圖片上傳功能
+   - 訂單管理：新增、修改、刪除功能
+   - 優惠券管理：新增、修改、刪除功能
+
+## 安裝套件
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 運行專案
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### 打包專案
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### 部署專案
 
 ```sh
-npm run lint
+npm run deploy
 ```
+
+## 專案套件
+- vue - v3.4.21
+- vite - v5.1.6
+- pinia - v2.1.7
+- vue-router - v4.3.0
+- axios - v1.6.8
+- vue-axios - v3.5.2
+- vue-loading-overlay - v6.0
+- sweetalert2 - v11.10.8
+- aos - v2.3.4
+- swiper - v11.1.1
+- vee-validate - v4.12.6
+- bootstrap - v5.3.3
+- bootstrap-icons - v1.11.3
+
+## 使用版本
+- Node.js - v18.16.1
+- npm - 9.5.1
