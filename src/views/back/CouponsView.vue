@@ -3,7 +3,7 @@
     <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70" />
     <div class="text-end mt-4">
       <button class="btn btn-primary" type="button" @click="openCouponModal(true)">
-        建立新的優惠券
+        <i class="bi bi-plus-lg pe-1"></i>新增優惠券
       </button>
     </div>
     <table class="table mt-4">

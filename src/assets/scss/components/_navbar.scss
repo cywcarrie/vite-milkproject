@@ -28,3 +28,9 @@
     }
   }
 }
+.admin-navbar-hover{
+  transition: all ease 0.3s;
+  &:hover{
+    color:#ffffff !important;
+  }
+}

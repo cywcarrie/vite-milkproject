@@ -3,7 +3,7 @@
   <div class="text-end mt-3">
     <button class="btn btn-primary" type="button"
     @click="openModal(true)">
-      建立新產品
+    <i class="bi bi-plus-lg pe-1"></i>新增產品
     </button>
   </div>
   <table class="table mt-4">
