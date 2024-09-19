@@ -1,4 +1,4 @@
-# vite-milkproject - 鮮乳購物電商網站
+# Funnie Milk - 鮮乳購物電商網站
 
 ## 專案說明
 
