@@ -70,4 +70,4 @@ sh deploy.sh
 ## 使用版本
 
 - Node.js - v18.16.1
-- npm - 9.5.1
+- npm - v9.5.1
