@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import FrontLayoutView from '@/views/FrontLayout.vue'
 
-
 const routes = [
   {
     path: '/',
@@ -9,9 +8,9 @@ const routes = [
     component: FrontLayoutView,
     children: [
       {
-        path: "/",
-        name:'home',
-        component: () => import("@/views/front/HomeView.vue"),
+        path: '/',
+        name: 'home',
+        component: () => import('@/views/front/HomeView.vue')
       },
       {
         path: 'login',
@@ -38,7 +37,7 @@ const routes = [
       {
         path: 'checkorder/:orderId',
         component: () => import('@/views/front/UserCheckOrder.vue')
-      },
+      }
     ]
   },
   {
@@ -56,7 +55,7 @@ const routes = [
       {
         path: 'coupons',
         component: () => import('@/views/back/CouponsView.vue')
-      }        
+      }
     ]
   },
   {
@@ -71,8 +70,8 @@ const router = createRouter({
   history: createWebHashHistory(),
   linkActiveClass: 'active',
   routes,
-  scrollBehavior () {
-    return { top: 0, behavior: "smooth" };
+  scrollBehavior() {
+    return { top: 0, behavior: 'smooth' }
   }
 })
 
