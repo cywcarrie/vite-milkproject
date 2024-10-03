@@ -74,12 +74,12 @@
               <table class="table table-light table-borderless mb-4">
                 <tbody>
                   <tr class="table-nowrap">
-                    <th width="100" class="text-nowrap">Email</th>
-                    <td class="text-nowrap">{{ order.user.email }}</td>
-                  </tr>
-                  <tr class="table-nowrap">
                     <th class="text-nowrap">姓名</th>
                     <td class="text-nowrap">{{ order.user.name }}</td>
+                  </tr>
+                  <tr class="table-nowrap">
+                    <th width="100" class="text-nowrap">Email</th>
+                    <td class="text-nowrap">{{ order.user.email }}</td>
                   </tr>
                   <tr class="table-nowrap">
                     <th class="text-nowrap">電話</th>

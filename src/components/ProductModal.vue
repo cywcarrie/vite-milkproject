@@ -8,7 +8,7 @@
     aria-hidden="true"
     ref="modal"
   >
-  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
         <div class="modal-header bg-primary text-white">
           <h5 class="modal-title" id="exampleModalLabel">
@@ -47,7 +47,11 @@
                   @change="uploadFile"
                 />
               </div>
-              <img class="img-fluid" :src="tempProduct.imageUrl" :alt="`${tempProduct.title} 圖片`" />
+              <img
+                class="img-fluid"
+                :src="tempProduct.imageUrl"
+                :alt="`${tempProduct.title} 圖片`"
+              />
               <div class="mt-5" v-if="tempProduct.images">
                 <div v-for="(image, key) in tempProduct.images" class="mb-3 input-group" :key="key">
                   <input
@@ -171,9 +175,7 @@
                     :false-value="0"
                     id="is_enabled"
                   />
-                  <label class="form-check-label" for="is_enabled">
-                    是否啟用
-                  </label>
+                  <label class="form-check-label" for="is_enabled"> 是否上架 </label>
                 </div>
               </div>
             </div>
@@ -205,25 +207,27 @@ export default {
   props: {
     product: {
       type: Object,
-      default () { return {} }
+      default() {
+        return {}
+      }
     }
   },
   watch: {
-    product () {
+    product() {
       this.tempProduct = this.product
       if (!this.tempProduct.images) {
         this.tempProduct.images = []
       }
     }
   },
-  data () {
+  data() {
     return {
       modal: {},
       tempProduct: {}
     }
   },
   methods: {
-    uploadFile () {
+    uploadFile() {
       const uploadedFile = this.$refs.fileInput.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', uploadedFile)

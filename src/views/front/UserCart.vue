@@ -5,7 +5,7 @@
       <div
         class="d-flex justify-content-center align-items-center my-5 position-relative banner banner1 container-fluid"
       >
-        <h2 class="position-absolute text-center text-white fw-bolder">購物車</h2>
+        <h2 class="position-absolute text-center text-white fw-bolder banner-title">購物車</h2>
       </div>
       <a
         href="#"
