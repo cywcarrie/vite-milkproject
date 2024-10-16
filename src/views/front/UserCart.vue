@@ -1,5 +1,5 @@
 <template>
-  <LoadingVue :active="isLoading" :loader="'spinner'" :color="'#fca311'" :width="70" :height="70" />
+  <VueLoading :active="isLoading" />
   <section class="mb-5">
     <div class="container">
       <div
@@ -194,10 +194,12 @@
 <script>
 import { mapState, mapActions } from 'pinia'
 import cartStore from '@/stores/cartStore'
+import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 
 export default {
   components: {
+    VueLoading,
     FooterComponent
   },
   data() {
