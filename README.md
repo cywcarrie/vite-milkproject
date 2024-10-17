@@ -1,4 +1,4 @@
-# Funnie Cafe - E-commerce website (English)
+# Funnie Milk - E-commerce website (Chinese)
 
 ## Introduction - Read this in Chinese : [繁體中文](README.zh_TW.md)
 
