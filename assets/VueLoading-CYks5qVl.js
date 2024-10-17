@@ -1,0 +1,1 @@
+import{_ as n,r as a,o as t,C as c}from"./index-qrNv9fh_.js";const r={data(){return{isLoading:!1}}};function s(i,p,_,d,o,l){const e=a("LoadingVue");return t(),c(e,{active:o.isLoading,loader:"spinner",color:"#fca311",width:70,height:70,opacity:.7},null,8,["active"])}const f=n(r,[["render",s]]);export{f as V};
