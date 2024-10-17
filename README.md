@@ -1,55 +1,61 @@
-# Funnie Milk - 鮮乳購物電商網站
+# Funnie Cafe - E-commerce website (English)
 
-### 網頁 : [Link](https://cywcarrie.github.io/vite-milkproject/#/)
+## Introduction - Read this in Chinese : [繁體中文](README.zh_TW.md)
 
-模擬電商網站，使用者可以將商品加入購物車、移除商品和送出訂單，以及可以輸入關鍵字搜尋商品，並且可以瀏覽個別商品的詳細資訊。後台則提供新增或修改商品和優惠券的功能。
+### Demo Website : [Link](https://cywcarrie.github.io/vite-milkproject/#/)
 
-## 專案使用技術
+In this simulation of a fully English e-commerce website, users can add products to their shopping cart, manage items by adding or removing them, and place orders. They can search for products using keywords and view detailed information about individual items. The backend allows administrator to add and modify products and coupons. 
 
-- 使用 Vue.js 框架搭配 Vite 和 Pinia 建立專案
-- 引入 Vue Router 和 Vue Axios 等套件，以實現路由管理和 API 請求功能
-- 配置 ESLint 符合 Standard 規範，確保程式碼品質
-- 透過 Pinia 進行狀態管理，負責跨元件的數據操作與共享
-- 使用 Bootstrap 5 和 SCSS 打造響應式界面，提升使用者體驗
+## Technologies Used
 
-## 網站功能
+Vue.js, Vite, Pinia, ESLint, Bootstrap 5, SCSS
 
-- 前台
-   - 首頁
-   - 商品列表：商品分類、用關鍵字搜尋商品
-   - 商品詳情
-   - 購物車：新增或移除商品、套用優惠劵
-   - 結帳：建立及送出訂單
-- 後台 (管理者)
-   - 商品管理：切換上、下架商品，新增、修改、刪除商品及上傳商品圖片
-   - 訂單管理：查看客戶訂單，也可以刪除已查看訂單
-   - 優惠券管理：新增、修改、刪除優惠劵
+## Key Contributions
 
-## 安裝套件
+- Developed the application using Vue.js and Vite, optimizing build processes for improved performance and responsiveness.
+- Integrated Vue Router and Vue Axios, enhancing route management and streamlining API requests, which led to a more intuitive user navigation experience.
+- Configured ESLint to adhere to Standard specifications, ensuring robust code quality and maintainability throughout the project lifecycle.
+- Utilized Pinia for state management, facilitating efficient data operations and promoting seamless communication among components.
+- Employed Bootstrap 5 and SCSS to design a responsive interface that significantly improved user experience, based on user feedback and testing insights.
+
+## Website features
+
+- Front-end 
+   - Home Page
+   - Products Page：Product classification and keyword search for efficient product discovery
+   - Product Page : Product details
+   - Shopping Cart： Add items to cart and remove items as needed
+   - Checkout Process：Create and submit order
+- Back-end (Administrator)
+   - Product management：Manage product functionalities by adding, removing, and modifying items
+   - Order management： View order details
+   - Coupon management：Manage coupon functions by adding, removing, and modifying coupons
+
+## Project Setup
 
 ```sh
 npm install
 ```
 
-### 運行專案
+### Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
 ```
 
-### 打包專案
+### Compile and Minify for Production
 
 ```sh
 npm run build
 ```
 
-### 部署專案
+### Deploy
 
 ```sh
 sh deploy.sh
 ```
 
-## 專案套件
+## Packages
 
 - vue - v3.4.21
 - vite - v5.1.6
@@ -64,8 +70,3 @@ sh deploy.sh
 - vee-validate - v4.12.6
 - bootstrap - v5.3.3
 - bootstrap-icons - v1.11.3
-
-## 使用版本
-
-- Node.js - v18.16.1
-- npm - v9.5.1
