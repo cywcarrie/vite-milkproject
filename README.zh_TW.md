@@ -1,5 +1,7 @@
 # Funnie Milk - 鮮乳購物電商網站
 
+## 專案簡介 - 其他版本語言 : [English](README.md)
+
 ### 網頁 : [Link](https://cywcarrie.github.io/vite-milkproject/#/)
 
 模擬電商網站，使用者可以將商品加入購物車、移除商品和送出訂單，以及可以輸入關鍵字搜尋商品，並且可以瀏覽個別商品的詳細資訊。後台則提供新增或修改商品和優惠券的功能。
