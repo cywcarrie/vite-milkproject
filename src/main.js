@@ -4,11 +4,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
-import "bootstrap"
+import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import {
-  Form, Field, ErrorMessage, defineRule, configure
-} from 'vee-validate'
+import { Form, Field, ErrorMessage, defineRule, configure } from 'vee-validate'
 import * as AllRules from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
@@ -27,10 +25,10 @@ Object.keys(AllRules).forEach((rule) => {
 })
 
 configure({
-  generateMessage: localize({ zh_TW: zhTW }), // 載入繁體中文語系
-  validateOnInput: true // 當輸入任何內容直接進行驗證
+  generateMessage: localize({ zh_TW: zhTW }),
+  validateOnInput: true
 })
-// 設定預設語系
+
 setLocale('zh_TW')
 
 app.use(createPinia())
@@ -41,4 +39,3 @@ app.component('FormVue', Form)
 app.component('FieldVue', Field)
 app.component('ErrorMessage', ErrorMessage)
 app.mount('#app')
-
