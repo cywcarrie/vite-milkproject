@@ -1,7 +1,7 @@
 <template>
   <div class="fixed-top">
     <div class="bg-secondary py-1">
-      <div class="container text-dark text-center">
+      <div class="container text-black text-center">
         結帳時輸入 <span class="fw-bold">funniemilk</span>，享有九折優惠
       </div>
     </div>
