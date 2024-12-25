@@ -111,11 +111,11 @@ export default {
       delComponent.showModal()
     },
     updatePaid(item) {
-      this.isLoading = true
       const api = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/order/${item.id}`
       const paid = {
         is_paid: item.is_paid
       }
+      this.isLoading = true
       this.$http
         .put(api, { data: paid })
         .then((response) => {
