@@ -9,13 +9,6 @@
           {{ product.category }}
         </h2>
       </div>
-      <a
-        href="#"
-        title="回上一頁"
-        class="text-black-50 hover-nav fw-bold mt-3"
-        @click.prevent="$router.go(-1)"
-        ><i class="bi bi-arrow-left-square-fill fs-2"></i
-      ></a>
       <nav
         aria-label="breadcrumb"
         class="mt-3 mb-md-4 d-flex justify-content-start d-none d-md-block"

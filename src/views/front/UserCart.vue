@@ -7,13 +7,6 @@
       >
         <h2 class="position-absolute text-center text-white fw-bolder banner-title">購物車</h2>
       </div>
-      <a
-        href="#"
-        title="回上一頁"
-        class="text-black-50 hover-nav fw-bold mt-3"
-        @click.prevent="$router.go(-1)"
-        ><i class="bi bi-arrow-left-square-fill fs-2"></i
-      ></a>
       <div class="d-flex justify-content-start mt-3 mb-4">
         <RouterLink class="btn btn-primary fw-bold" to="/products"
           ><i class="bi bi-house-heart pe-2 fs-5"></i>回到商品列表</RouterLink
