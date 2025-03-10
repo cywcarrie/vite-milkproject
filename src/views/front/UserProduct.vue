@@ -141,7 +141,7 @@ import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import SwiperComponent from '@/components/SwiperComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import ShowNotification from '@/mixin/swal'
+import ShowNotification from '@/shared/swal'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 

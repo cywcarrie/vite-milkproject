@@ -223,7 +223,7 @@ import { storeToRefs } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import ShowNotification from '@/mixin/swal'
+import ShowNotification from '@/shared/swal'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 
@@ -286,6 +286,7 @@ export default {
         return item.title.match(search.value)
       })
     })
+
     onMounted(() => {
       getProducts()
     })

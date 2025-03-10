@@ -194,7 +194,7 @@
 <script>
 import axios from 'axios'
 import { ref, watch } from 'vue'
-import useModal from '@/mixin/modal'
+import useModal from '@/shared/modal'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 

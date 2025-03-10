@@ -39,7 +39,7 @@
 
 <script>
 import { ref } from 'vue'
-import ShowNotification from '@/mixin/swal'
+import ShowNotification from '@/shared/swal'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 

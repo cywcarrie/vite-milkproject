@@ -58,7 +58,7 @@ import { ref, onMounted } from 'vue'
 import VueLoading from '@/components/VueLoading.vue'
 import CouponModal from '@/components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
-import ShowNotification from '@/mixin/swal'
+import ShowNotification from '@/shared/swal'
 import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env

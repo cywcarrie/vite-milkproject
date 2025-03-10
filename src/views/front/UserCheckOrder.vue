@@ -124,7 +124,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import ShowNotification from '@/mixin/swal'
+import ShowNotification from '@/shared/swal'
 import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env

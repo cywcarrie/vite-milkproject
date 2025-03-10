@@ -353,11 +353,11 @@
 
 <script>
 import { ref, reactive, watch, onMounted } from 'vue'
-import { storeToRefs } from 'pinia' // 引入 storeToRefs
+import { storeToRefs } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import ShowNotification from '@/mixin/swal'
+import ShowNotification from '@/shared/swal'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 

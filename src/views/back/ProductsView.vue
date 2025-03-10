@@ -64,7 +64,7 @@ import VueLoading from '@/components/VueLoading.vue'
 import ProductModal from '@/components/ProductModal.vue'
 import Pagination from '@/components/PaginationComponent.vue'
 import DelModal from '@/components/DelModal.vue'
-import ShowNotification from '@/mixin/swal'
+import ShowNotification from '@/shared/swal'
 import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env

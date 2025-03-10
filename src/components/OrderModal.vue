@@ -114,7 +114,7 @@
 </template>
 <script>
 import { ref, watch } from 'vue'
-import useModal from '@/mixin/modal'
+import useModal from '@/shared/modal'
 
 export default {
   name: 'orderModal',

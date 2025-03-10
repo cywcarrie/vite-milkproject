@@ -9,7 +9,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Navbar from '@/components/AdminNavbar.vue'
-import ShowNotification from '@/mixin/swal'
+import ShowNotification from '@/shared/swal'
 import axios from 'axios'
 
 const { VITE_APP_API } = import.meta.env
