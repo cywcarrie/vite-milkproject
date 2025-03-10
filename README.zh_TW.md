@@ -57,7 +57,7 @@ sh deploy.sh
 - vite - v5.1.6
 - pinia - v2.1.7
 - vue-router - v4.3.0
-- axios - v1.6.8
+- axios - v1.8.1
 - vue-axios - v3.5.2
 - vue-loading-overlay - v6.0
 - sweetalert2 - v11.10.8
