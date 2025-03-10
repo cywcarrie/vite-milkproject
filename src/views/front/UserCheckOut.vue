@@ -370,10 +370,8 @@ export default {
   },
   setup() {
     const router = useRouter()
-    const store = cartStore() // 使用 Pinia store
-
-    // 使用 storeToRefs 將 store 中的響應式屬性轉換為 ref
-    const { cart } = storeToRefs(store) // 這裡將 cart 轉換為 ref
+    const store = cartStore()
+    const { cart } = storeToRefs(store)
     const isLoading = ref(false)
     const total = ref(0)
     const final_total = ref(0)

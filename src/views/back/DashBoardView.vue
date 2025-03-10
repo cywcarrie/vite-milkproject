@@ -41,7 +41,6 @@ export default {
     onMounted(() => {
       checkUser()
     })
-
     return {
       checkUser
     }

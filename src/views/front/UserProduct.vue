@@ -136,14 +136,14 @@
 
 <script>
 import { ref, onMounted, watch } from 'vue'
-import { storeToRefs } from 'pinia' // 引入 Pinia store
+import { storeToRefs } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import SwiperComponent from '@/components/SwiperComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/mixin/swal'
 import { useRoute } from 'vue-router'
-import axios from 'axios' // 引入 axios
+import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
