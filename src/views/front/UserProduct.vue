@@ -135,12 +135,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
+import { ref, onMounted, watch } from 'vue'
+import { storeToRefs } from 'pinia' // 引入 Pinia store
 import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import SwiperComponent from '@/components/SwiperComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import ShowNotification from '@/mixins/swal'
+import ShowNotification from '@/mixin/swal'
+import { useRoute } from 'vue-router'
+import axios from 'axios' // 引入 axios
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -150,46 +153,55 @@ export default {
     SwiperComponent,
     FooterComponent
   },
-  data() {
-    return {
-      product: {},
-      qty: 1,
-      id: '',
-      isLoading: false
-    }
-  },
-  watch: {
-    $route() {
-      if (this.$route.params.productId !== undefined) {
-        this.id = this.$route.params.productId
-        this.getProduct()
+  setup() {
+    const route = useRoute()
+    const store = cartStore()
+    const { cart } = storeToRefs(store)
+    const { addCart } = store
+    const product = ref({})
+    const qty = ref(1)
+    const id = ref('')
+    const isLoading = ref(false)
+
+    watch(
+      () => route.params.productId,
+      (newProductId) => {
+        if (newProductId !== undefined) {
+          id.value = newProductId
+          getProduct()
+        }
       }
-    }
-  },
-  methods: {
-    ...mapActions(cartStore, ['addCart']),
-    getProduct() {
-      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/product/${this.id}`
-      this.isLoading = true
-      this.$http
+    )
+    function getProduct() {
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/product/${id.value}`
+      isLoading.value = true
+      axios
         .get(url)
         .then((response) => {
-          this.isLoading = false
+          isLoading.value = false
           if (response.data.success) {
-            this.product = response.data.product
+            product.value = response.data.product
           }
         })
         .catch((error) => {
+          isLoading.value = false
           ShowNotification('error', `${error.response.data.message}`)
         })
     }
-  },
-  computed: {
-    ...mapState(cartStore, ['cart'])
-  },
-  created() {
-    this.id = this.$route.params.productId
-    this.getProduct()
+
+    onMounted(() => {
+      id.value = route.params.productId
+      getProduct()
+    })
+    return {
+      product,
+      qty,
+      id,
+      isLoading,
+      cart,
+      addCart,
+      getProduct
+    }
   }
 }
 </script>

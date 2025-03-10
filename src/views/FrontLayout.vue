@@ -12,38 +12,44 @@
 </template>
 
 <script>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { RouterView } from 'vue-router'
 import NavBar from '@/components/UserNavbar.vue'
 
 export default {
-  data() {
-    return {
-      scTimer: 0,
-      scY: 0
-    }
-  },
   components: {
     NavBar,
     RouterView
   },
-  methods: {
-    handleScroll() {
-      if (this.scTimer) return
-      this.scTimer = setTimeout(() => {
-        this.scY = window.scrollY
-        clearTimeout(this.scTimer)
-        this.scTimer = 0
+  setup() {
+    const scTimer = ref(0)
+    const scY = ref(0)
+
+    function handleScroll() {
+      if (scTimer.value) return
+      scTimer.value = setTimeout(() => {
+        scY.value = window.scrollY
+        clearTimeout(scTimer.value)
+        scTimer.value = 0
       }, 100)
-    },
-    goTop: function () {
+    }
+    function goTop() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       })
     }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll)
+
+    onMounted(() => {
+      window.addEventListener('scroll', handleScroll)
+    })
+    onBeforeUnmount(() => {
+      window.removeEventListener('scroll', handleScroll)
+    })
+    return {
+      scY,
+      goTop
+    }
   }
 }
 </script>

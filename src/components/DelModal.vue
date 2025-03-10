@@ -6,7 +6,7 @@
     role="dialog"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
-    ref="modal"
+    ref="modalElement"
   >
     <div class="modal-dialog" role="document">
       <div class="modal-content border-0">
@@ -35,16 +35,23 @@
   </div>
 </template>
 <script>
-import modalMixin from '@/mixins/modalMixin'
+import { ref } from 'vue'
+import useModal from '@/mixin/modal'
+
 export default {
   props: {
     item: {}
   },
-  data() {
+  setup() {
+    const { modalElement, showModal, hideModal } = useModal()
+    const modal = ref('')
+
     return {
-      modal: ''
+      showModal,
+      hideModal,
+      modal,
+      modalElement
     }
-  },
-  mixins: [modalMixin]
+  }
 }
 </script>

@@ -6,8 +6,11 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import Navbar from '@/components/AdminNavbar.vue'
-import ShowNotification from '@/mixins/swal'
+import ShowNotification from '@/mixin/swal'
+import axios from 'axios'
 
 const { VITE_APP_API } = import.meta.env
 
@@ -15,20 +18,33 @@ export default {
   components: {
     Navbar
   },
-  created() {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    this.$http.defaults.headers.common.Authorization = token
-    const api = `${VITE_APP_API}api/user/check`
-    this.$http
-      .post(api, this.user)
-      .then((response) => {
-        if (!response.data.success) {
-          this.$router.push('/login')
-        }
-      })
-      .catch((error) => {
-        ShowNotification('error', `${error.response.data.message}`)
-      })
+  setup() {
+    const user = ref(null)
+    const router = useRouter()
+
+    function checkUser() {
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
+      axios.defaults.headers.common.Authorization = token
+      const api = `${VITE_APP_API}api/user/check`
+      axios
+        .post(api, user.value)
+        .then((response) => {
+          if (!response.data.success) {
+            router.push('/login')
+          }
+        })
+        .catch((error) => {
+          ShowNotification('error', `${error.response.data.message}`)
+        })
+    }
+
+    onMounted(() => {
+      checkUser()
+    })
+
+    return {
+      checkUser
+    }
   }
 }
 </script>

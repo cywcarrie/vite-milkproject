@@ -218,11 +218,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
+import { ref, computed, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import ShowNotification from '@/mixins/swal'
+import ShowNotification from '@/mixin/swal'
+import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -231,63 +234,75 @@ export default {
     VueLoading,
     FooterComponent
   },
-  data() {
-    return {
-      products: [],
-      search: '',
-      categories: [],
-      selectCategory: '',
-      isLoading: false,
-      id: ''
-    }
-  },
-  methods: {
-    ...mapActions(cartStore, ['addCart']),
-    getProducts() {
+  setup() {
+    const store = cartStore()
+    const { isDone } = storeToRefs(store)
+    const { addCart } = store
+    const route = useRoute()
+    const router = useRouter()
+    const products = ref([])
+    const search = ref('')
+    const categories = ref([])
+    const selectCategory = ref('')
+    const isLoading = ref(false)
+    const id = ref('')
+
+    function getProducts() {
       const url = `${VITE_APP_API}api/${VITE_APP_PATH}/products/all`
-      this.search = ''
-      this.isLoading = true
-      this.$http
+      search.value = ''
+      isLoading.value = true
+      axios
         .get(url)
         .then((response) => {
-          this.isLoading = false
+          isLoading.value = false
           if (response.data.success) {
-            this.products = response.data.products
-            this.getCategories()
-            const { productCategory } = this.$route.params
+            products.value = response.data.products
+            getCategories()
+            const { productCategory } = route.params
             if (productCategory) {
-              this.selectCategory = productCategory
+              selectCategory.value = productCategory
             }
           }
         })
         .catch((error) => {
           ShowNotification('error', `${error.response.data.message}`)
         })
-    },
-    getCategories() {
-      const categories = new Set()
-      this.products.forEach((item) => {
-        categories.add(item.category)
-      })
-      this.categories = [...categories]
-    },
-    getProduct(id) {
-      this.$router.push(`/product/${id}`)
     }
-  },
-  computed: {
-    ...mapState(cartStore, ['isDone']),
-    filterProducts() {
-      return this.products.filter((item) => item.category.match(this.selectCategory))
-    },
-    searchProducts() {
-      return this.products.filter((item) => {
-        return item.title.match(this.search)
+    function getCategories() {
+      const categorySet = new Set()
+      products.value.forEach((item) => {
+        categorySet.add(item.category)
       })
+      categories.value = [...categorySet]
     }
-  },
-  mounted() {
-    this.getProducts()
+    function getProduct(id) {
+      router.push(`/product/${id}`)
+    }
+    const filterProducts = computed(() => {
+      return products.value.filter((item) => item.category.match(selectCategory.value))
+    })
+    const searchProducts = computed(() => {
+      return products.value.filter((item) => {
+        return item.title.match(search.value)
+      })
+    })
+    onMounted(() => {
+      getProducts()
+    })
+    return {
+      products,
+      search,
+      categories,
+      selectCategory,
+      isLoading,
+      id,
+      getProduct,
+      getProducts,
+      filterProducts,
+      searchProducts,
+      isDone,
+      addCart
+    }
   }
 }
 </script>

@@ -6,7 +6,7 @@
     role="dialog"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
-    ref="modal"
+    ref="modalElement"
   >
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
@@ -16,7 +16,7 @@
           </h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close btn-close-white"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
@@ -106,16 +106,16 @@
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-primary" @click="$emit('update-order', tempOrder)">
-            確認
-          </button>
+          <button type="button" class="btn btn-primary" @click="pushOrderModal">確認</button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import modalMixin from '@/mixins/modalMixin'
+import { ref, watch } from 'vue'
+import useModal from '@/mixin/modal'
+
 export default {
   name: 'orderModal',
   props: {
@@ -126,20 +126,35 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      status: {},
-      modal: '',
-      tempOrder: {},
-      isPaid: false
+  emits: ['update-product', 'update-order'],
+  setup(props, { emit }) {
+    const { modalElement, showModal, hideModal } = useModal()
+    const modal = ref('')
+    const status = ref({})
+    const tempOrder = ref({})
+    const isPaid = ref(false)
+
+    watch(
+      () => props.order,
+      (newOrder) => {
+        tempOrder.value = newOrder
+        isPaid.value = tempOrder.value.is_paid
+      }
+    )
+
+    const pushOrderModal = () => {
+      emit('update-order', tempOrder.value)
     }
-  },
-  emits: ['update-product'],
-  mixins: [modalMixin],
-  watch: {
-    order() {
-      this.tempOrder = this.order
-      this.isPaid = this.tempOrder.is_paid
+
+    return {
+      modal,
+      status,
+      tempOrder,
+      isPaid,
+      showModal,
+      hideModal,
+      modalElement,
+      pushOrderModal
     }
   }
 }

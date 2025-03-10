@@ -38,20 +38,26 @@
 </template>
 
 <script>
-import ShowNotification from '@/mixins/swal'
+import { ref } from 'vue'
+import ShowNotification from '@/mixin/swal'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const { VITE_APP_API } = import.meta.env
 
 export default {
-  methods: {
-    logout() {
+  setup() {
+    const user = ref({})
+    const router = useRouter()
+
+    function logout() {
       const api = `${VITE_APP_API}logout`
-      this.$http
-        .post(api, this.user)
+      axios
+        .post(api, user.value)
         .then((response) => {
           if (response.data.success) {
             ShowNotification('success', '登出成功')
-            this.$router.push('/login')
+            router.push('/login')
           } else {
             ShowNotification('error', '登出失敗')
           }
@@ -59,6 +65,9 @@ export default {
         .catch((error) => {
           ShowNotification('error', `${error.response.data.message}`)
         })
+    }
+    return {
+      logout
     }
   }
 }

@@ -56,11 +56,13 @@
 </template>
 
 <script>
-import VueLoading from '@/components/VueLoading.vue'
+import { ref, onMounted } from 'vue'
+import VueLoading from './VueLoading.vue'
 import { Pagination, A11y, Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -70,35 +72,37 @@ export default {
     Swiper,
     SwiperSlide
   },
-  data() {
-    return {
-      isLoading: false,
-      products: [],
-      modules: [Pagination, A11y, Autoplay]
-    }
-  },
-  methods: {
-    getProducts() {
+  setup() {
+    const isLoading = ref(false)
+    const products = ref([])
+    const modules = [Pagination, A11y, Autoplay]
+
+    function getProducts() {
       const url = `${VITE_APP_API}api/${VITE_APP_PATH}/products/all`
-      this.isLoading = true
-      this.$http.get(url).then((response) => {
-        this.isLoading = false
-        this.products = response.data.products
-        this.getSwiper()
+      isLoading.value = true
+      axios.get(url).then((response) => {
+        isLoading.value = false
+        products.value = response.data.products
+        getSwiper()
       })
-    },
-    getSwiper() {
-      const randomSwiper = []
-      for (let i = 0; i < 6; i += 1) {
-        const num = Math.floor(Math.random() * this.products.length)
-        randomSwiper.push(this.products[num])
-        this.products.splice(num, 1)
-      }
-      this.products = randomSwiper
     }
-  },
-  mounted() {
-    this.getProducts()
+    function getSwiper() {
+      const randomSwiper = []
+      for (let i = 0; i < 6; i++) {
+        const num = Math.floor(Math.random() * products.value.length)
+        randomSwiper.push(products.value[num])
+        products.value.splice(num, 1)
+      }
+      products.value = randomSwiper
+    }
+    onMounted(() => {
+      getProducts()
+    })
+    return {
+      isLoading,
+      products,
+      modules
+    }
   }
 }
 </script>

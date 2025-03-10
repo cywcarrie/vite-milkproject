@@ -5,17 +5,17 @@
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
-    ref="modal"
+    ref="modalElement"
   >
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
         <div class="modal-header bg-primary text-white">
           <h5 class="modal-title" id="exampleModalLabel">
-            <span>新增產品</span>
+            <span>產品內容</span>
           </h5>
           <button
             type="button"
-            class="btn btn-close btn-secondary"
+            class="btn-close btn-close-white"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
@@ -184,13 +184,7 @@
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             取消
           </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="$emit('update-product', tempProduct)"
-          >
-            確認
-          </button>
+          <button type="button" class="btn btn-primary" @click="pushProduct">確認</button>
         </div>
       </div>
     </div>
@@ -198,7 +192,9 @@
 </template>
 
 <script>
-import modalMixin from '@/mixins/modalMixin'
+import axios from 'axios'
+import { ref, watch } from 'vue'
+import useModal from '@/mixin/modal'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -211,33 +207,45 @@ export default {
       }
     }
   },
-  watch: {
-    product() {
-      this.tempProduct = this.product
-      if (!this.tempProduct.images) {
-        this.tempProduct.images = []
+  emits: ['update-product'],
+  setup(props, { emit }) {
+    const { modalElement, showModal, hideModal } = useModal()
+    const modal = ref({})
+    const tempProduct = ref({})
+
+    watch(
+      () => props.product,
+      (newProduct) => {
+        tempProduct.value = newProduct
+        if (!tempProduct.value.images) {
+          tempProduct.value.images = []
+        }
       }
-    }
-  },
-  data() {
-    return {
-      modal: {},
-      tempProduct: {}
-    }
-  },
-  methods: {
-    uploadFile() {
-      const uploadedFile = this.$refs.fileInput.files[0]
+    )
+
+    function uploadFile() {
+      const uploadedFile = modal.value.$refs.fileInput.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', uploadedFile)
       const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/upload`
-      this.$http.post(url, formData).then((response) => {
+      axios.post(url, formData).then((response) => {
         if (response.data.success) {
-          this.tempProduct.imageUrl = response.data.imageUrl
+          tempProduct.value.imageUrl = response.data.imageUrl
         }
       })
     }
-  },
-  mixins: [modalMixin]
+    const pushProduct = () => {
+      emit('update-product', tempProduct.value)
+    }
+
+    return {
+      tempProduct,
+      uploadFile,
+      showModal,
+      hideModal,
+      modalElement,
+      pushProduct
+    }
+  }
 }
 </script>

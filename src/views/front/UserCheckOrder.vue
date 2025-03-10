@@ -120,9 +120,12 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import ShowNotification from '@/mixins/swal'
+import ShowNotification from '@/mixin/swal'
+import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -131,50 +134,58 @@ export default {
     VueLoading,
     FooterComponent
   },
-  data() {
-    return {
-      order: {
-        user: {}
-      },
-      orderId: '',
-      isLoading: false
-    }
-  },
-  methods: {
-    getOrder() {
-      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/order/${this.orderId}`
-      this.isLoading = true
-      this.$http
+  setup() {
+    const route = useRoute()
+    const order = ref({
+      user: {}
+    })
+    const orderId = ref('')
+    const isLoading = ref(false)
+
+    function getOrder() {
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/order/${orderId.value}`
+      isLoading.value = true
+      axios
         .get(url)
         .then((response) => {
-          this.isLoading = false
+          isLoading.value = false
           if (response.data.success) {
-            this.order = response.data.order
+            order.value = response.data.order
           }
         })
         .catch((error) => {
-          ShowNotification('error', `${error.response.data.message}`)
-        })
-    },
-    payOrder() {
-      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/pay/${this.orderId}`
-      this.isLoading = true
-      this.$http
-        .post(url)
-        .then((response) => {
-          this.isLoading = false
-          if (response.data.success) {
-            this.getOrder()
-          }
-        })
-        .catch((error) => {
+          isLoading.value = false
           ShowNotification('error', `${error.response.data.message}`)
         })
     }
-  },
-  created() {
-    this.orderId = this.$route.params.orderId
-    this.getOrder()
+    function payOrder() {
+      const url = `${VITE_APP_API}api/${VITE_APP_PATH}/pay/${orderId.value}`
+      isLoading.value = true
+      axios
+        .post(url)
+        .then((response) => {
+          isLoading.value = false
+          if (response.data.success) {
+            getOrder()
+          }
+        })
+        .catch((error) => {
+          isLoading.value = false
+          ShowNotification('error', `${error.response.data.message}`)
+        })
+    }
+
+    onMounted(() => {
+      orderId.value = route.params.orderId
+      getOrder()
+    })
+    return {
+      order,
+      orderId,
+      isLoading,
+      getOrder,
+      payOrder
+    }
   }
 }
 </script>

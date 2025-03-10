@@ -352,11 +352,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
+import { ref, reactive, watch, onMounted } from 'vue'
+import { storeToRefs } from 'pinia' // 引入 storeToRefs
 import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import ShowNotification from '@/mixins/swal'
+import ShowNotification from '@/mixin/swal'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -365,95 +368,112 @@ export default {
     VueLoading,
     FooterComponent
   },
-  data() {
-    return {
-      isLoading: false,
-      total: 0,
-      final_total: 0,
-      form: {
-        user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: '',
-          delivery: '',
-          pay: '',
-          bill: '',
-          billNum: ''
-        },
-        message: ''
+  setup() {
+    const router = useRouter()
+    const store = cartStore() // 使用 Pinia store
+
+    // 使用 storeToRefs 將 store 中的響應式屬性轉換為 ref
+    const { cart } = storeToRefs(store) // 這裡將 cart 轉換為 ref
+    const isLoading = ref(false)
+    const total = ref(0)
+    const final_total = ref(0)
+    const coupon_code = ref('')
+    const expiryDate = ref('')
+    const cardNumber = ref('')
+    const tempAddress = ref('')
+
+    const form = reactive({
+      user: {
+        name: '',
+        email: '',
+        tel: '',
+        address: '',
+        delivery: '',
+        pay: '',
+        bill: '',
+        billNum: ''
       },
-      coupon_code: '',
-      tempAddress: '',
-      expiryDate: '',
-      cardNumber: ''
-    }
-  },
-  watch: {
-    'form.user.delivery': 'sendDelivery',
-    expiryDate(newExpiryDate, oldExpiryDate) {
+      message: ''
+    })
+
+    watch(cardNumber, (newCardNumber, oldCardNumber) => {
+      if (
+        newCardNumber.length < oldCardNumber.length &&
+        newCardNumber.charAt(newCardNumber.length - 1) === ' '
+      ) {
+        cardNumber.value = oldCardNumber.slice(0, -2)
+      }
+      if (
+        newCardNumber.length > oldCardNumber.length &&
+        (newCardNumber.length + 1) % 5 === 0 &&
+        cardNumber.value.length !== 0 &&
+        cardNumber.value.length < 19
+      ) {
+        cardNumber.value = newCardNumber + ' '
+      }
+    })
+
+    watch(() => form.user.delivery, sendDelivery)
+
+    watch(expiryDate, (newExpiryDate, oldExpiryDate) => {
       if (newExpiryDate.length === 2 && newExpiryDate.length > oldExpiryDate.length) {
-        this.expiryDate += '/'
+        expiryDate.value += '/'
       } else if (
         newExpiryDate.length < oldExpiryDate.length &&
         oldExpiryDate.charAt(2) === '/' &&
         oldExpiryDate.length === 3
       ) {
-        this.expiryDate = oldExpiryDate.slice(0, 1)
+        expiryDate.value = oldExpiryDate.slice(0, 1)
       }
-    },
-    cardNumber(newCardNumber, oldCardNumber) {
-      if (
-        newCardNumber.length < oldCardNumber.length &&
-        newCardNumber.charAt(newCardNumber.length - 1) === ' '
-      ) {
-        this.cardNumber = oldCardNumber.slice(0, -2)
-      }
-      if (
-        newCardNumber.length > oldCardNumber.length &&
-        (newCardNumber.length + 1) % 5 === 0 &&
-        this.cardNumber.length !== 0 &&
-        this.cardNumber.length < 19
-      ) {
-        this.cardNumber = newCardNumber + ' '
-      }
-    }
-  },
-  methods: {
-    ...mapActions(cartStore, ['getCart']),
-    createOrder() {
+    })
+
+    function createOrder() {
       const url = `${VITE_APP_API}api/${VITE_APP_PATH}/order`
-      const order = this.form
-      this.isLoading = true
-      this.$http
+      const order = form
+      isLoading.value = true
+      axios
         .post(url, { data: order })
         .then((response) => {
-          this.isLoading = false
-          this.$router.push(`/checkorder/${response.data.orderId}`)
-          this.getCart()
+          isLoading.value = false
+          router.push(`/checkorder/${response.data.orderId}`)
+          store.getCart()
         })
         .catch((error) => {
+          isLoading.value = false
           ShowNotification('error', `${error.response.data.message}`)
         })
-    },
-    sendDelivery() {
-      const { delivery } = this.form.user
-      if (delivery !== '外送') {
-        this.tempAddress = delivery
-      }
-    },
-    createOrderData() {
-      if (this.form.user.address === '') {
-        this.form.user.address = this.tempAddress
-      }
-      this.createOrder()
     }
-  },
-  computed: {
-    ...mapState(cartStore, ['cart'])
-  },
-  created() {
-    this.getCart()
+    function sendDelivery() {
+      const { delivery } = form.user
+      if (delivery !== '外送') {
+        tempAddress.value = delivery
+      }
+    }
+    function createOrderData() {
+      if (form.user.address === '') {
+        form.user.address = tempAddress.value
+      }
+      createOrder()
+    }
+
+    onMounted(() => {
+      store.getCart()
+    })
+
+    return {
+      isLoading,
+      total,
+      final_total,
+      form,
+      coupon_code,
+      expiryDate,
+      cardNumber,
+      cart,
+      createOrder,
+      tempAddress,
+      sendDelivery,
+      createOrderData
+    }
   }
 }
 </script>

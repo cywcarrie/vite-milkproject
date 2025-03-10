@@ -92,18 +92,23 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
-import cartStore from '@/stores/cartStore.js'
+import { onMounted } from 'vue'
+import cartStore from '@/stores/cartStore'
+import { storeToRefs } from 'pinia'
 
 export default {
-  methods: {
-    ...mapActions(cartStore, ['getCart'])
-  },
-  computed: {
-    ...mapState(cartStore, ['cart'])
-  },
-  mounted() {
-    this.getCart()
+  setup() {
+    const userCart = cartStore()
+    const { cart } = storeToRefs(userCart)
+    const { getCart } = userCart
+
+    onMounted(() => {
+      getCart()
+    })
+    return {
+      cart,
+      getCart
+    }
   }
 }
 </script>

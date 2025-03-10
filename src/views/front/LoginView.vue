@@ -37,30 +37,30 @@
 </template>
 
 <script>
-import ShowNotification from '@/mixins/swal'
+import { reactive } from 'vue'
+import ShowNotification from '@/mixin/swal'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const { VITE_APP_API } = import.meta.env
 
 export default {
-  data() {
-    return {
-      user: {
-        username: '',
-        password: ''
-      }
-    }
-  },
-  methods: {
-    signIn() {
+  setup() {
+    const router = useRouter()
+    const user = reactive({
+      username: '',
+      password: ''
+    })
+    function signIn() {
       const api = `${VITE_APP_API}admin/signin`
-      this.$http
-        .post(api, this.user)
+      axios
+        .post(api, user)
         .then((response) => {
           if (response.data.success) {
             const { token, expired } = response.data
             document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
             ShowNotification('success', '登入成功')
-            this.$router.push('/admin/products')
+            router.push('/admin/products')
           } else {
             ShowNotification('error', '登入失敗')
           }
@@ -68,6 +68,11 @@ export default {
         .catch((error) => {
           ShowNotification('error', `${error.response.data.message}`)
         })
+    }
+
+    return {
+      user,
+      signIn
     }
   }
 }

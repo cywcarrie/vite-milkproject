@@ -185,8 +185,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
+import { ref, onMounted } from 'vue'
 import cartStore from '@/stores/cartStore'
+import { storeToRefs } from 'pinia'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 
@@ -195,27 +196,39 @@ export default {
     VueLoading,
     FooterComponent
   },
-  data() {
+  setup() {
+    const coupon_code = ref('')
+    const userCart = cartStore()
+    const { carts, total, final_total, cart, isLoading } = storeToRefs(userCart)
+    const {
+      getCart,
+      updateCart,
+      removeCartItem,
+      deleteAllCart,
+      getProduct,
+      addCouponCode,
+      copyCouponCode
+    } = userCart
+
+    onMounted(() => {
+      getCart()
+    })
+
     return {
-      coupon_code: ''
+      coupon_code,
+      carts,
+      total,
+      final_total,
+      cart,
+      isLoading,
+      getCart,
+      updateCart,
+      removeCartItem,
+      deleteAllCart,
+      getProduct,
+      addCouponCode,
+      copyCouponCode
     }
-  },
-  methods: {
-    ...mapActions(cartStore, [
-      'getCart',
-      'updateCart',
-      'removeCartItem',
-      'deleteAllCart',
-      'getProduct',
-      'addCouponCode',
-      'copyCouponCode'
-    ])
-  },
-  computed: {
-    ...mapState(cartStore, ['carts', 'total', 'final_total', 'cart', 'isLoading'])
-  },
-  mounted() {
-    this.getCart()
   }
 }
 </script>

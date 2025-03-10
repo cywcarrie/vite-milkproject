@@ -6,7 +6,7 @@
     role="dialog"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
-    ref="modal"
+    ref="modalElement"
   >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -70,38 +70,53 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-          <button type="button" class="btn btn-primary" @click="$emit('update-coupon', tempCoupon)">
-            更新優惠券
-          </button>
+          <button type="button" class="btn btn-primary" @click="pushCoupon">確認</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
-import modalMixin from '@/mixins/modalMixin'
+import { ref, watch } from 'vue'
+import useModal from '@/mixin/modal'
+
 export default {
   name: 'couponModal',
   props: {
     coupon: {}
   },
-  data() {
-    return {
-      tempCoupon: {},
-      due_date: ''
-    }
-  },
   emits: ['update-coupon'],
-  watch: {
-    coupon() {
-      this.tempCoupon = this.coupon
-      const dateAndTime = new Date(this.tempCoupon.due_date * 1000).toISOString().split('T')
-      ;[this.due_date] = dateAndTime
-    },
-    due_date() {
-      this.tempCoupon.due_date = Math.floor(new Date(this.due_date) / 1000)
+  setup(props, { emit }) {
+    const { modalElement, showModal, hideModal } = useModal()
+    const tempCoupon = ref({})
+    const due_date = ref('')
+
+    watch(
+      () => props.coupon,
+      (newCoupon) => {
+        tempCoupon.value = newCoupon
+        const dateAndTime = new Date(tempCoupon.value.due_date * 1000).toISOString().split('T')
+        ;[due_date.value] = dateAndTime
+      }
+    )
+
+    watch(due_date, (newDueDate) => {
+      tempCoupon.value.due_date = Math.floor(new Date(newDueDate) / 1000)
+    })
+
+    const pushCoupon = () => {
+      emit('update-coupon', tempCoupon.value)
     }
-  },
-  mixins: [modalMixin]
+
+    return {
+      tempCoupon,
+      due_date,
+      modalElement,
+      pushCoupon,
+      showModal,
+      hideModal
+    }
+  }
 }
 </script>
