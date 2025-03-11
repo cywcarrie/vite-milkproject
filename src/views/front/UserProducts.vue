@@ -218,14 +218,13 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { inject, ref, computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/shared/swal'
 import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -235,6 +234,7 @@ export default {
     FooterComponent
   },
   setup() {
+    const axios = inject('$axios')
     const store = cartStore()
     const { isDone } = storeToRefs(store)
     const { addCart } = store
