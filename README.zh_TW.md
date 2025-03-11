@@ -10,7 +10,7 @@
 
 - 使用 Vue.js 框架搭配 Vite 和 Pinia 建立專案
 - 使用 Vue Router 和 axios，以實現路由管理和串接 API 資料
-- 利用 Composition API 重構組件邏輯，提升代碼的可維護性與可讀性
+- 利用 Composition API 重構元件邏輯，提升代碼的可維護性與可讀性
 - 配置 ESLint 符合 Standard 規範，確保程式碼品質
 - 透過 Pinia 進行狀態管理，負責跨元件的數據操作與共享
 - 使用 Bootstrap 5 和 SCSS 打造響應式界面，提升使用者體驗
