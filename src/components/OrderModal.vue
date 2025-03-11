@@ -112,6 +112,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { ref, watch } from 'vue'
 import useModal from '@/shared/modal'

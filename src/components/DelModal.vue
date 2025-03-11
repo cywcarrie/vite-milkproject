@@ -34,6 +34,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { ref } from 'vue'
 import useModal from '@/shared/modal'
