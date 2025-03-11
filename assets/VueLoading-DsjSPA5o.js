@@ -1,0 +1,1 @@
+import{_ as a,l as s,r as t,o as c,G as r}from"./index-Cn8zyKun.js";const i={setup(){return{isLoading:s(!1)}}};function p(o,d,_,e,l,f){const n=t("LoadingVue");return c(),r(n,{active:e.isLoading,loader:"spinner",color:"#fca311",width:70,height:70,opacity:.7},null,8,["active"])}const g=a(i,[["render",p]]);export{g as V};
