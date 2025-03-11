@@ -37,15 +37,15 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { inject, reactive } from 'vue'
 import ShowNotification from '@/shared/swal'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 
 const { VITE_APP_API } = import.meta.env
 
 export default {
   setup() {
+    const axios = inject('$axios')
     const router = useRouter()
     const user = reactive({
       username: '',

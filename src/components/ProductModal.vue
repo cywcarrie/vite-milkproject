@@ -192,8 +192,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { ref, watch } from 'vue'
+import { inject, ref, watch } from 'vue'
 import useModal from '@/shared/modal'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
@@ -210,6 +209,7 @@ export default {
   emits: ['update-product'],
   setup(props, { emit }) {
     const { modalElement, showModal, hideModal } = useModal()
+    const axios = inject('$axios')
     const modal = ref({})
     const tempProduct = ref({})
 

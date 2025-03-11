@@ -38,15 +38,15 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import ShowNotification from '@/shared/swal'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 
 const { VITE_APP_API } = import.meta.env
 
 export default {
   setup() {
+    const axios = inject('$axios')
     const user = ref({})
     const router = useRouter()
 

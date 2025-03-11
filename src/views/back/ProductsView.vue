@@ -59,13 +59,12 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { inject, ref, onMounted } from 'vue'
 import VueLoading from '@/components/VueLoading.vue'
 import ProductModal from '@/components/ProductModal.vue'
 import Pagination from '@/components/PaginationComponent.vue'
 import DelModal from '@/components/DelModal.vue'
 import ShowNotification from '@/shared/swal'
-import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -77,6 +76,7 @@ export default {
     Pagination
   },
   setup() {
+    const axios = inject('$axios')
     const products = ref([])
     const pagination = ref({})
     const tempProduct = ref({})

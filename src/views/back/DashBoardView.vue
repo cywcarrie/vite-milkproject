@@ -6,11 +6,10 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { inject, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Navbar from '@/components/AdminNavbar.vue'
 import ShowNotification from '@/shared/swal'
-import axios from 'axios'
 
 const { VITE_APP_API } = import.meta.env
 
@@ -19,6 +18,7 @@ export default {
     Navbar
   },
   setup() {
+    const axios = inject('$axios')
     const user = ref(null)
     const router = useRouter()
 

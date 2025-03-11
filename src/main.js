@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import axios from 'axios'
-import VueAxios from 'vue-axios'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import 'bootstrap'
@@ -32,8 +31,8 @@ configure({
 setLocale('zh_TW')
 
 app.use(createPinia())
-app.use(VueAxios, axios)
 app.use(router)
+app.provide('$axios', axios)
 app.component('LoadingVue', Loading)
 app.component('FormVue', Form)
 app.component('FieldVue', Field)

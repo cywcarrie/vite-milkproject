@@ -56,13 +56,12 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { inject, ref, onMounted } from 'vue'
 import VueLoading from './VueLoading.vue'
 import { Pagination, A11y, Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -73,6 +72,7 @@ export default {
     SwiperSlide
   },
   setup() {
+    const axios = inject('$axios')
     const isLoading = ref(false)
     const products = ref([])
     const modules = [Pagination, A11y, Autoplay]

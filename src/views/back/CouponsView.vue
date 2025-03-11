@@ -54,12 +54,11 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { inject, ref, onMounted } from 'vue'
 import VueLoading from '@/components/VueLoading.vue'
 import CouponModal from '@/components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
 import ShowNotification from '@/shared/swal'
-import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -69,6 +68,7 @@ export default {
     config: Object
   },
   setup() {
+    const axios = inject('$axios')
     const coupons = ref({})
     const tempCoupon = ref({
       title: '',

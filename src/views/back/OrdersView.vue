@@ -70,13 +70,12 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { inject, ref, onMounted } from 'vue'
 import VueLoading from '@/components/VueLoading.vue'
 import DelModal from '@/components/DelModal.vue'
 import OrderModal from '@/components/OrderModal.vue'
 import Pagination from '@/components/PaginationComponent.vue'
 import ShowNotification from '@/shared/swal'
-import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -88,6 +87,7 @@ export default {
     OrderModal
   },
   setup() {
+    const axios = inject('$axios')
     const orders = ref({})
     const isNew = ref(false)
     const pagination = ref({})

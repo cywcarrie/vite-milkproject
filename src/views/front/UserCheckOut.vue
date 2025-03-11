@@ -352,14 +352,13 @@
 </template>
 
 <script>
-import { ref, reactive, watch, onMounted } from 'vue'
+import { inject, ref, reactive, watch, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/shared/swal'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -369,6 +368,7 @@ export default {
     FooterComponent
   },
   setup() {
+    const axios = inject('$axios')
     const router = useRouter()
     const store = cartStore()
     const { cart } = storeToRefs(store)

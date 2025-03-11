@@ -120,12 +120,11 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { inject, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/shared/swal'
-import axios from 'axios'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -135,6 +134,7 @@ export default {
     FooterComponent
   },
   setup() {
+    const axios = inject('$axios')
     const route = useRoute()
     const order = ref({
       user: {}
