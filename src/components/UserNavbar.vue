@@ -18,7 +18,7 @@
             <span
               class="badge text-white bg-danger position-absolute navbar-badge-position"
               v-if="cart.final_total > 0"
-              >${{ $filters.currency(cart.final_total) }}</span
+              >${{ $format.currency(cart.final_total) }}</span
             >
           </RouterLink>
         </div>
@@ -29,7 +29,7 @@
               <span
                 class="badge text-white bg-danger position-absolute navbar-badge-position"
                 v-if="cart.final_total > 0"
-                >${{ $filters.currency(cart.final_total) }}</span
+                >${{ $format.currency(cart.final_total) }}</span
               >
             </RouterLink>
             <ul class="cart-list-content list-unstyled m-0 p-0 shadow">
@@ -66,7 +66,7 @@
                   </ul>
                   <div class="d-flex py-3 justify-content-between mb-6 fw-bold">
                     <p>總計</p>
-                    <p>NT${{ $filters.currency(cart.final_total) }}</p>
+                    <p>NT${{ $format.currency(cart.final_total) }}</p>
                   </div>
                   <RouterLink
                     to="/cart"
@@ -93,12 +93,12 @@
 
 <script>
 import { onMounted } from 'vue'
-import cartStore from '@/stores/cartStore'
+import { useCartStore } from '@/stores/cartStore'
 import { storeToRefs } from 'pinia'
 
 export default {
   setup() {
-    const userCart = cartStore()
+    const userCart = useCartStore()
     const { cart } = storeToRefs(userCart)
     const { getCart } = userCart
 

@@ -74,7 +74,7 @@
                       </div>
                     </td>
                     <td class="text-nowrap">
-                      {{ $filters.currency(item.total) }}
+                      {{ $format.currency(item.total) }}
                     </td>
                     <td>
                       <div class="d-flex justify-content-center">
@@ -108,14 +108,14 @@
                 <ul class="list-unstyled fs-6 fs-md-5 border-bottom mb-0">
                   <li class="d-flex align-items-center justify-content-between mb-4">
                     <div>總計</div>
-                    <div>NT${{ $filters.currency(cart.total) }}</div>
+                    <div>NT${{ $format.currency(cart.total) }}</div>
                   </li>
                   <li
                     v-if="cart.final_total !== cart.total"
                     class="d-flex align-items-center justify-content-between mb-4"
                   >
                     <div class="text-danger">優惠價</div>
-                    <div class="text-danger">NT${{ $filters.currency(cart.final_total) }}</div>
+                    <div class="text-danger">NT${{ $format.currency(cart.final_total) }}</div>
                   </li>
                 </ul>
                 <div class="mt-4 border-bottom">
@@ -156,7 +156,7 @@
                   </div>
                 </div>
                 <h4 class="fs-3 fs-md-2 fw-bold text-center pt-4 pb-2 pt-md-5 pb-md-3">
-                  NT${{ $filters.currency(cart.final_total) }}
+                  NT${{ $format.currency(cart.final_total) }}
                 </h4>
               </div>
               <RouterLink
@@ -186,7 +186,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import cartStore from '@/stores/cartStore'
+import { useCartStore } from '@/stores/cartStore'
 import { storeToRefs } from 'pinia'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
@@ -198,7 +198,7 @@ export default {
   },
   setup() {
     const coupon_code = ref('')
-    const userCart = cartStore()
+    const userCart = useCartStore()
     const { carts, total, final_total, cart, isLoading } = storeToRefs(userCart)
     const {
       getCart,

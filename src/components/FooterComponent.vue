@@ -4,12 +4,12 @@
       <footer class="py-3 my-4 border-top">
         <ul class="nav justify-content-center mb-3">
           <li class="nav-item">
-            <a class="text-primary hover-nav px-2" href="#" @click.prevent=""
+            <a class="text-primary hover-nav px-2" href="#" @click.prevent
               ><i class="bi bi-facebook footer-icon-size"></i
             ></a>
           </li>
           <li class="nav-item ms-3">
-            <a class="text-primary hover-nav px-2" href="#" @click.prevent=""
+            <a class="text-primary hover-nav px-2" href="#" @click.prevent
               ><i class="bi bi-github footer-icon-size"></i
             ></a>
           </li>

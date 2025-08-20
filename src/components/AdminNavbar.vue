@@ -28,7 +28,10 @@
           <RouterLink to="/admin/coupons" class="nav-link text-primary fw-bold admin-navbar-hover"
             >優惠券</RouterLink
           >
-          <a href="#" @click="logout" class="nav-link text-primary fw-bold admin-navbar-hover"
+          <a
+            href="#"
+            @click.prevent="logout"
+            class="nav-link text-primary fw-bold admin-navbar-hover"
             >登出</a
           >
         </div>
@@ -63,7 +66,8 @@ export default {
           }
         })
         .catch((error) => {
-          ShowNotification('error', `${error.response.data.message}`)
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
         })
     }
     return {

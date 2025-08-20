@@ -39,9 +39,10 @@
 export default {
   props: ['pages'],
   setup(props, { emit }) {
-    const updatePage = (page) => {
+    function updatePage(page) {
       emit('emit-pages', page)
     }
+
     return {
       updatePage
     }

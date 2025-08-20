@@ -43,7 +43,7 @@
                     <small v-if="cart.final_total !== cart.total" class="text-danger text-end"
                       >優惠價：</small
                     >
-                    {{ $filters.currency(item.final_total) }}
+                    {{ $format.currency(item.final_total) }}
                   </td>
                 </tr>
               </tbody>
@@ -51,13 +51,13 @@
                 <tr>
                   <td colspan="2" class="text-end fs-5">總計</td>
                   <td class="text-end fs-5 text-primary fw-bold">
-                    {{ $filters.currency(cart.total) }}
+                    {{ $format.currency(cart.total) }}
                   </td>
                 </tr>
                 <tr v-if="cart.final_total !== cart.total">
                   <td colspan="2" class="text-end text-danger fs-5">優惠價</td>
                   <td class="text-end text-danger fs-5 fw-bold">
-                    {{ $filters.currency(cart.final_total) }}
+                    {{ $format.currency(cart.final_total) }}
                   </td>
                 </tr>
               </tfoot>
@@ -153,7 +153,7 @@
             </fieldset>
             <div class="mb-3" v-if="form.user.delivery === '本店自取'">
               <p class="fw-bold mb-1 mb-md-2">本店位址: 台南市東東區中中路000號</p>
-              <p class="fw-bold">聯絡電話: 06-12345678</p>
+              <p class="fw-bold">聯絡電話: 06-1234567</p>
             </div>
             <div class="mb-3" v-if="form.user.delivery === '外送'">
               <label for="address" class="form-label"
@@ -354,7 +354,7 @@
 <script>
 import { inject, ref, reactive, watch, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import cartStore from '@/stores/cartStore'
+import { useCartStore } from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/shared/swal'
@@ -370,7 +370,7 @@ export default {
   setup() {
     const axios = inject('$axios')
     const router = useRouter()
-    const store = cartStore()
+    const store = useCartStore()
     const { cart } = storeToRefs(store)
     const isLoading = ref(false)
     const total = ref(0)
@@ -432,13 +432,15 @@ export default {
       axios
         .post(url, { data: order })
         .then((response) => {
-          isLoading.value = false
           router.push(`/checkorder/${response.data.orderId}`)
           store.getCart()
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
     function sendDelivery() {

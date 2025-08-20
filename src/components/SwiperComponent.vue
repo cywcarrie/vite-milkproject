@@ -39,13 +39,13 @@
             <h4 class="card-title fw-bolder mb-4">{{ item.title }}</h4>
             <div class="d-flex justify-content-end align-items-center mb-3">
               <div class="fs-4 text-black-50" v-if="!item.price">
-                NT${{ $filters.currency(item.origin_price) }}
+                NT${{ $format.currency(item.origin_price) }}
               </div>
               <del class="fs-5 text-black-50" v-if="item.price">
-                NT${{ $filters.currency(item.origin_price) }}</del
+                NT${{ $format.currency(item.origin_price) }}</del
               >
               <div class="fs-4 text-danger fw-bold ps-2" v-if="item.price">
-                NT${{ $filters.currency(item.price) }}
+                NT${{ $format.currency(item.price) }}
               </div>
             </div>
           </div>
@@ -87,14 +87,18 @@ export default {
       })
     }
     function getSwiper() {
+      const sourceProducts = [...products.value]
       const randomSwiper = []
-      for (let i = 0; i < 6; i++) {
-        const num = Math.floor(Math.random() * products.value.length)
-        randomSwiper.push(products.value[num])
-        products.value.splice(num, 1)
+
+      for (let i = 0; i < 6 && sourceProducts.length > 0; i++) {
+        const num = Math.floor(Math.random() * sourceProducts.length)
+        randomSwiper.push(sourceProducts[num])
+        sourceProducts.splice(num, 1)
       }
+
       products.value = randomSwiper
     }
+
     onMounted(() => {
       getProducts()
     })

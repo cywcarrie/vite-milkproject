@@ -21,7 +21,7 @@
           <tr v-for="item in coupons" :key="`coupon ${item.id}`">
             <td class="text-nowrap">{{ item.title }}</td>
             <td>{{ item.percent }}%</td>
-            <td class="text-nowrap">{{ $filters.date(item.due_date) }}</td>
+            <td class="text-nowrap">{{ $format.date(item.due_date) }}</td>
             <td>
               <span v-if="item.is_enabled === 1" class="text-success">啟用</span>
               <span v-else class="text-muted">未起用</span>
@@ -48,7 +48,7 @@
         </tbody>
       </table>
     </div>
-    <couponModal :coupon="tempCoupon" ref="couponModal" @update-coupon="updateCoupon" />
+    <CouponModal :coupon="tempCoupon" ref="couponModal" @update-coupon="updateCoupon" />
     <DelModal :item="tempCoupon" ref="delModal" @del-item="delCoupon" />
   </div>
 </template>
@@ -103,12 +103,14 @@ export default {
       axios
         .get(url, tempCoupon.value)
         .then((response) => {
-          isLoading.value = false
           coupons.value = response.data.coupons
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
     function updateCoupon(tempCoupon) {
@@ -131,7 +133,6 @@ export default {
         axios
           .put(url, { data: tempCoupon })
           .then((response) => {
-            isLoading.value = false
             if (response.data.success) {
               ShowNotification('success', '更新優惠劵成功')
               getCoupons()
@@ -141,8 +142,11 @@ export default {
             }
           })
           .catch((error) => {
+            const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+            ShowNotification('error', message)
+          })
+          .finally(() => {
             isLoading.value = false
-            ShowNotification('error', `${error.response.data.message}`)
           })
       }
     }
@@ -152,7 +156,6 @@ export default {
       axios
         .delete(url)
         .then((response) => {
-          isLoading.value = false
           if (response.data.success) {
             ShowNotification('success', '刪除優惠劵成功')
             const delComponent = delModal.value
@@ -163,8 +166,11 @@ export default {
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
 

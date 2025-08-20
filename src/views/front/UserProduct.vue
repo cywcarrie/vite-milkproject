@@ -68,17 +68,15 @@
           </div>
           <div class="d-flex justify-content-end align-items-center mt-3 pt-3">
             <div class="fs-4 text-black-50" v-if="!product.price">
-              NT${{ $filters.currency(product.origin_price) }}
+              NT${{ $format.currency(product.origin_price) }}
             </div>
             <del class="fs-5 text-black-50" v-if="product.price"
-              >NT${{ $filters.currency(product.origin_price) }}</del
+              >NT${{ $format.currency(product.origin_price) }}</del
             >
           </div>
           <div class="d-flex justify-content-end align-items-center mb-3">
             <div class="fs-4 ms-2 text-primary fw-bold" v-if="product.price">
-              <span class="text-danger fs-3">優惠價:</span> NT${{
-                $filters.currency(product.price)
-              }}
+              <span class="text-danger fs-3">優惠價:</span> NT${{ $format.currency(product.price) }}
             </div>
           </div>
           <div class="d-flex justify-content-end align-items-center">
@@ -137,7 +135,7 @@
 <script>
 import { inject, ref, onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import cartStore from '@/stores/cartStore'
+import { useCartStore } from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import SwiperComponent from '@/components/SwiperComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
@@ -155,7 +153,7 @@ export default {
   setup() {
     const axios = inject('$axios')
     const route = useRoute()
-    const store = cartStore()
+    const store = useCartStore()
     const { cart } = storeToRefs(store)
     const { addCart } = store
     const product = ref({})
@@ -163,12 +161,24 @@ export default {
     const id = ref('')
     const isLoading = ref(false)
 
+    watch(qty, (newQty) => {
+      if (typeof newQty !== 'number' || isNaN(newQty)) {
+        qty.value = 1
+      } else if (newQty < 1) {
+        qty.value = 1
+      } else if (newQty > 99) {
+        qty.value = 99
+      }
+    })
+
     watch(
       () => route.params.productId,
       (newProductId) => {
         if (newProductId !== undefined) {
           id.value = newProductId
           getProduct()
+        } else {
+          ShowNotification('error', '無法獲取產品資訊')
         }
       }
     )
@@ -181,11 +191,16 @@ export default {
           isLoading.value = false
           if (response.data.success) {
             product.value = response.data.product
+          } else {
+            ShowNotification('error', '無法獲取產品資訊')
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
 

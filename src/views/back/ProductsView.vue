@@ -21,11 +21,11 @@
         <tr v-for="item in products" :key="item.id">
           <td class="text-nowrap">{{ item.category }}</td>
           <td class="text-nowrap">{{ item.title }}</td>
-          <td class="text-right">
-            {{ $filters.currency(item.origin_price) }}
+          <td>
+            {{ $format.currency(item.origin_price) }}
           </td>
-          <td class="text-right">
-            {{ $filters.currency(item.price) }}
+          <td>
+            {{ $format.currency(item.price) }}
           </td>
           <td>
             <span class="text-success" v-if="item.is_enabled">上架</span>
@@ -92,15 +92,17 @@ export default {
       axios
         .get(api)
         .then((response) => {
-          isLoading.value = false
           if (response.data.success) {
             products.value = response.data.products
             pagination.value = response.data.pagination
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
     function openModal(isNewModal, item) {
@@ -128,7 +130,6 @@ export default {
       const productComponent = productModal.value
       axios[httpMethod](api, { data: tempProduct.value })
         .then((response) => {
-          isLoading.value = false
           productComponent.hideModal()
           if (response.data.success) {
             getProducts()
@@ -138,8 +139,11 @@ export default {
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
     function openDelProductModal(item) {
@@ -155,7 +159,6 @@ export default {
       axios
         .delete(url)
         .then((response) => {
-          isLoading.value = false
           delComponent.hideModal()
           if (response.data.success) {
             getProducts()
@@ -165,8 +168,11 @@ export default {
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
     onMounted(() => {

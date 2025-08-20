@@ -234,7 +234,7 @@ export default {
         }
       })
     }
-    const pushProduct = () => {
+    function pushProduct() {
       emit('update-product', tempProduct.value)
     }
 

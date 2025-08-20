@@ -11,10 +11,10 @@ import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 import App from './App.vue'
 import router from './router'
-import { currency, date } from './methods/filters'
+import { currency, date } from './methods/format'
 
 const app = createApp(App)
-app.config.globalProperties.$filters = {
+app.config.globalProperties.$format = {
   date,
   currency
 }

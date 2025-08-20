@@ -57,7 +57,7 @@
                     <td class="text-center">{{ item.product.title }}</td>
                     <td class="text-center text-nowrap">{{ item.qty }}</td>
                     <td class="text-center text-nowrap">
-                      {{ $filters.currency(item.final_total) }}
+                      {{ $format.currency(item.final_total) }}
                     </td>
                   </tr>
                 </tbody>
@@ -65,7 +65,7 @@
                   <tr>
                     <td colspan="2" class="text-end text-nowrap">總計</td>
                     <td class="fs-5 text-primary fw-bold text-nowrap">
-                      {{ $filters.currency(order.total) }}
+                      {{ $format.currency(order.total) }}
                     </td>
                   </tr>
                 </tfoot>
@@ -148,14 +148,16 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          isLoading.value = false
           if (response.data.success) {
             order.value = response.data.order
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
     function payOrder() {
@@ -164,14 +166,17 @@ export default {
       axios
         .post(url)
         .then((response) => {
-          isLoading.value = false
           if (response.data.success) {
+            ShowNotification('success', '付款成功')
             getOrder()
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
 

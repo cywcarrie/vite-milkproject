@@ -34,7 +34,8 @@ export default {
           }
         })
         .catch((error) => {
-          ShowNotification('error', `${error.response.data.message}`)
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
         })
     }
 

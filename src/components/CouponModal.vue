@@ -84,7 +84,10 @@ import useModal from '@/shared/modal'
 export default {
   name: 'couponModal',
   props: {
-    coupon: {}
+    coupon: {
+      type: Object,
+      default: () => ({})
+    }
   },
   emits: ['update-coupon'],
   setup(props, { emit }) {
@@ -95,9 +98,9 @@ export default {
     watch(
       () => props.coupon,
       (newCoupon) => {
-        tempCoupon.value = newCoupon
-        const dateAndTime = new Date(tempCoupon.value.due_date * 1000).toISOString().split('T')
-        ;[due_date.value] = dateAndTime
+        tempCoupon.value = { ...newCoupon }
+        const dueDateTime = new Date(tempCoupon.value.due_date * 1000)
+        due_date.value = dueDateTime.toISOString().split('T')[0]
       }
     )
 
@@ -105,8 +108,9 @@ export default {
       tempCoupon.value.due_date = Math.floor(new Date(newDueDate) / 1000)
     })
 
-    const pushCoupon = () => {
+    function pushCoupon() {
       emit('update-coupon', tempCoupon.value)
+      hideModal()
     }
 
     return {

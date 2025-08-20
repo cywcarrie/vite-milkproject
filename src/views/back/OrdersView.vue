@@ -15,7 +15,7 @@
       <tbody>
         <template v-for="item in orders" :key="`orders ${item.id}`">
           <tr v-if="orders.length" :class="{ 'text-secondary': !item.is_paid }">
-            <td>{{ $filters.date(item.create_at) }}</td>
+            <td>{{ $format.date(item.create_at) }}</td>
             <td><span v-text="item.user.email" v-if="item.user"></span></td>
             <td>
               <ul class="list-unstyled text-nowrap">
@@ -25,7 +25,7 @@
                 </li>
               </ul>
             </td>
-            <td class="text-right">{{ item.total }}</td>
+            <td class="text-nowrap">{{ item.total }}</td>
             <td>
               <div class="form-check form-switch">
                 <input
@@ -88,7 +88,7 @@ export default {
   },
   setup() {
     const axios = inject('$axios')
-    const orders = ref({})
+    const orders = ref([])
     const isNew = ref(false)
     const pagination = ref({})
     const isLoading = ref(false)
@@ -103,17 +103,20 @@ export default {
       const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/orders?page=${currentPageParam}`
       isLoading.value = true
       axios
-        .get(url, tempOrder)
+        .get(url)
         .then((response) => {
-          isLoading.value = false
           orders.value = response.data.orders
           pagination.value = response.data.pagination
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
+
     function openModal(item) {
       // eslint-disable-next-line no-const-assign
       tempOrder.value = { ...item }
@@ -134,7 +137,6 @@ export default {
       axios
         .put(api, { data: paid })
         .then((response) => {
-          isLoading.value = false
           if (response.data.success) {
             getOrders(currentPage.value)
             ShowNotification('success', '更新付款狀態成功')
@@ -143,8 +145,11 @@ export default {
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
     function checkOrderInfo(item) {
@@ -170,7 +175,6 @@ export default {
       axios
         .delete(url)
         .then((response) => {
-          isLoading.value = false
           const delComponent = delModal.value
           delComponent.hideModal()
           if (response.data.success) {
@@ -181,8 +185,11 @@ export default {
           }
         })
         .catch((error) => {
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
           isLoading.value = false
-          ShowNotification('error', `${error.response.data.message}`)
         })
     }
 

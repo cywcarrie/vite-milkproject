@@ -34,7 +34,7 @@
               </button>
               <button
                 v-for="item in categories"
-                :key="item"
+                :key="`category-${item}`"
                 type="button"
                 class="list-group-item list-group-item-action fw-bold"
                 :class="{ active: item === selectCategory }"
@@ -92,12 +92,12 @@
         <template v-if="search">
           <div class="col-lg-9">
             <div class="mb-3">
-              <div class="fs-5">
+              <div class="fs-5 d-flex align-items-center">
                 以下為您顯示 <span class="fs-4 text-primary fw-bold">{{ search }}</span> 的結果
                 <button
                   type="button"
                   class="btn btn-outline-danger btn-sm ms-2"
-                  @click="getProducts()"
+                  @click="cancelSearch()"
                 >
                   <i class="bi bi-x-circle pe-1"></i>取消搜尋
                 </button>
@@ -127,13 +127,13 @@
                       <h5 class="card-title fw-bolder text-primary mb-3">{{ item.title }}</h5>
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="h5 text-secondary" v-if="!item.price">
-                          NT${{ $filters.currency(item.origin_price) }}
+                          NT${{ $format.currency(item.origin_price) }}
                         </div>
                         <del class="h6 text-secondary" v-if="item.price"
-                          >NT${{ $filters.currency(item.origin_price) }}</del
+                          >NT${{ $format.currency(item.origin_price) }}</del
                         >
                         <div class="h5 text-primary fw-bold" v-if="item.price">
-                          NT${{ $filters.currency(item.price) }}
+                          NT${{ $format.currency(item.price) }}
                         </div>
                       </div>
                     </div>
@@ -184,13 +184,13 @@
                       <h5 class="card-title fw-bolder text-primary mb-3">{{ item.title }}</h5>
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="h5 text-secondary" v-if="!item.price">
-                          NT${{ $filters.currency(item.origin_price) }}
+                          NT${{ $format.currency(item.origin_price) }}
                         </div>
                         <del class="h6 text-secondary" v-if="item.price"
-                          >NT${{ $filters.currency(item.origin_price) }}</del
+                          >NT${{ $format.currency(item.origin_price) }}</del
                         >
                         <div class="h5 text-primary fw-bold" v-if="item.price">
-                          NT${{ $filters.currency(item.price) }}
+                          NT${{ $format.currency(item.price) }}
                         </div>
                       </div>
                     </div>
@@ -220,7 +220,7 @@
 <script>
 import { inject, ref, computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import cartStore from '@/stores/cartStore'
+import { useCartStore } from '@/stores/cartStore'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/shared/swal'
@@ -235,7 +235,7 @@ export default {
   },
   setup() {
     const axios = inject('$axios')
-    const store = cartStore()
+    const store = useCartStore()
     const { isDone } = storeToRefs(store)
     const { addCart } = store
     const route = useRoute()
@@ -254,7 +254,6 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          isLoading.value = false
           if (response.data.success) {
             products.value = response.data.products
             getCategories()
@@ -265,7 +264,11 @@ export default {
           }
         })
         .catch((error) => {
-          ShowNotification('error', `${error.response.data.message}`)
+          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+          ShowNotification('error', message)
+        })
+        .finally(() => {
+          isLoading.value = false
         })
     }
     function getCategories() {
@@ -274,6 +277,11 @@ export default {
         categorySet.add(item.category)
       })
       categories.value = [...categorySet]
+    }
+    function cancelSearch() {
+      search.value = ''
+      selectCategory.value = ''
+      getProducts()
     }
     function getProduct(id) {
       router.push(`/product/${id}`)
@@ -297,6 +305,8 @@ export default {
       selectCategory,
       isLoading,
       id,
+      cancelSearch,
+      getCategories,
       getProduct,
       getProducts,
       filterProducts,
