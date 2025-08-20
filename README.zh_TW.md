@@ -49,7 +49,7 @@ npm run build
 ### 部署專案
 
 ```sh
-sh deploy.sh
+npm run deploy
 ```
 
 ## 專案套件

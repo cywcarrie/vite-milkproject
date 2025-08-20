@@ -53,7 +53,7 @@ npm run build
 ### Deploy
 
 ```sh
-sh deploy.sh
+npm run deploy
 ```
 
 ## Packages
