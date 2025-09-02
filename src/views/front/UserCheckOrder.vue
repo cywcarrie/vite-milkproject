@@ -121,7 +121,7 @@
 
 <script>
 import { inject, ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import VueLoading from '@/components/VueLoading.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/shared/swal'
@@ -136,6 +136,7 @@ export default {
   setup() {
     const axios = inject('$axios')
     const route = useRoute()
+    const router = useRouter()
     const order = ref({
       user: {}
     })
@@ -153,8 +154,13 @@ export default {
           }
         })
         .catch((error) => {
-          const message = error.response?.data?.message || '發生錯誤，請稍後再試'
-          ShowNotification('error', message)
+          const status = error.response?.status
+          if (status === 404) {
+            router.push('/not-found')
+          } else {
+            const message = error.response?.data?.message || '發生錯誤，請稍後再試'
+            ShowNotification('error', message)
+          }
         })
         .finally(() => {
           isLoading.value = false
@@ -182,6 +188,10 @@ export default {
 
     onMounted(() => {
       orderId.value = route.params.orderId
+      if (!orderId.value) {
+        router.push('/not-found')
+        return
+      }
       getOrder()
     })
     return {

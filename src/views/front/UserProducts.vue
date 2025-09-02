@@ -93,7 +93,7 @@
           <div class="col-lg-9">
             <div class="mb-3">
               <div class="fs-5 d-flex align-items-center">
-                以下為您顯示 <span class="fs-4 text-primary fw-bold">{{ search }}</span> 的結果
+                以下為您顯示 <span class="fs-4 text-primary fw-bold px-2">{{ search }}</span> 的結果
                 <button
                   type="button"
                   class="btn btn-outline-danger btn-sm ms-2"

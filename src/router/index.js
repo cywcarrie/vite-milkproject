@@ -59,9 +59,14 @@ const routes = [
     ]
   },
   {
+    path: '/not-found',
+    name: 'notFound',
+    component: () => import('@/views/NotFound.vue')
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: {
-      name: 'FrontLayout'
+      name: 'notFound'
     }
   }
 ]

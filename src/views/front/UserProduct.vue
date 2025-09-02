@@ -140,7 +140,7 @@ import VueLoading from '@/components/VueLoading.vue'
 import SwiperComponent from '@/components/SwiperComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/shared/swal'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -153,6 +153,7 @@ export default {
   setup() {
     const axios = inject('$axios')
     const route = useRoute()
+    const router = useRouter()
     const store = useCartStore()
     const { cart } = storeToRefs(store)
     const { addCart } = store
@@ -193,6 +194,7 @@ export default {
             product.value = response.data.product
           } else {
             ShowNotification('error', '無法獲取產品資訊')
+            router.push('/not-found')
           }
         })
         .catch((error) => {
