@@ -6,8 +6,8 @@
 
     <h1 class="fs-1 fw-bold text-primary mb-4">404</h1>
 
-    <p class="fs-5 text-dark mb-4">哎呀！這個頁面不存在。</p>
+    <p class="fs-5 text-dark mb-4">抱歉！這個頁面不存在。</p>
 
-    <RouterLink to="/" class="btn btn-outline-primary"> 返回首頁</RouterLink>
+    <RouterLink to="/" class="btn btn-outline-primary">返回首頁</RouterLink>
   </section>
 </template>
