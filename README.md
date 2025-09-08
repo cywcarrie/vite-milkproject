@@ -4,7 +4,7 @@
 
 ### Demo Website : [Link](https://cywcarrie.github.io/vite-milkproject/#/)
 
-In this simulation of a fully Chinese e-commerce website, users can add products to their shopping cart, manage items by adding or removing them, and place orders. They can search for products using keywords and view detailed information about individual items. The backend allows administrator to add and modify products and coupons.
+In this simulation of a fully Chinese e-commerce website, users can add products to their shopping cart, manage items by adding or removing them, and place orders. They can search for products using keywords, view detailed information about individual items, and customize their selections. The backend allows administrator to add and modify products and coupons.
 
 ## Technologies Used
 
@@ -24,7 +24,7 @@ Vue.js, Vite, Pinia, ESLint, Bootstrap 5, SCSS
 - Front-end
   - Home Page
   - Products Page：Product classification and keyword search for efficient product discovery
-  - Product Page : Product details
+  - Product Page : Product details and Customization Options
   - Shopping Cart： Add items to cart and remove items as needed
   - Checkout Process：Create and submit order
 - Back-end (Administrator)
