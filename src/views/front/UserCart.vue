@@ -8,9 +8,13 @@
         <h2 class="position-absolute text-center text-white fw-bolder banner-title">購物車</h2>
       </div>
       <div class="d-flex justify-content-start mt-3 mb-4">
-        <RouterLink class="btn btn-primary fw-bold" to="/products"
-          ><i class="bi bi-house-heart pe-2 fs-5"></i>回到商品列表</RouterLink
+        <RouterLink
+          to="/products"
+          class="btn btn-outline-primary fw-semibold px-3 px-1 px-md-4 py-md-2 d-flex align-items-center rounded-pill shadow-sm cart-back-btn"
         >
+          <i class="bi bi-house-heart-fill fs-6"></i>
+          <span class="fs-6">返回商品列表</span>
+        </RouterLink>
       </div>
       <template v-if="cart.total !== 0">
         <div class="d-flex justify-content-center mt-5">

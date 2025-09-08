@@ -12,7 +12,7 @@
             type="email"
             id="inputEmail"
             class="form-control"
-            placeholder="Email address"
+            placeholder="電子郵件地址"
             required
             autofocus
             v-model="user.username"
@@ -24,7 +24,7 @@
             type="password"
             id="inputPassword"
             class="form-control"
-            placeholder="Password"
+            placeholder="密碼"
             required
             v-model="user.password"
           />

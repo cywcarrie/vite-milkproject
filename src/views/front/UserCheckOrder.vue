@@ -29,8 +29,8 @@
           <span>訂單完成</span>
         </h5>
       </div>
-      <div class="row justify-content-center align-items-center">
-        <div class="col-md-10">
+      <div class="my-5 row justify-content-center">
+        <form class="col-lg-6 col-md-8" @submit.prevent="payOrder">
           <div
             class="d-flex justify-content-center align-items-center mt-5"
             v-if="order.is_paid === true"
@@ -41,78 +41,82 @@
           <h6 class="fw-bold mt-4 mb-5 text-center" v-if="order.is_paid === true">
             感謝您的訂購，訂單明細將會寄送至您的電子信箱 !
           </h6>
-          <div class="my-5 row justify-content-center">
-            <h3 class="text-center fw-bold mb-4">訂單明細</h3>
-            <form class="col-lg-6" @submit.prevent="payOrder">
-              <table class="table align-middle table-light table-borderless mb-4">
-                <thead class="text-center">
+          <div class="custom-card shadow-sm p-4 mb-4 bg-white rounded-4 border border-primary">
+            <h3 class="text-center fw-bold mb-4">
+              <i class="bi bi-receipt-cutoff me-2 text-primary"></i>訂單明細
+            </h3>
+            <div class="table-responsive">
+              <table class="table align-middle table-borderless mb-0">
+                <thead class="bg-primary text-white text-center rounded-top">
                   <tr>
-                    <th class="text-nowrap">商品名稱</th>
-                    <th class="text-center text-nowrap">數量</th>
+                    <th>商品名稱</th>
+                    <th>數量</th>
                     <th class="text-nowrap">價格</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                   <tr v-for="item in order.products" :key="item.id">
-                    <td class="text-center">{{ item.product.title }}</td>
-                    <td class="text-center text-nowrap">{{ item.qty }}</td>
-                    <td class="text-center text-nowrap">
+                    <td class="fw-bold text-body-secondary">{{ item.product.title }}</td>
+                    <td class="text-body-secondary">{{ item.qty }}</td>
+                    <td class="text-nowrap text-body-secondary">
                       {{ $format.currency(item.final_total) }}
                     </td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="2" class="text-end text-nowrap">總計</td>
+                    <td colspan="2" class="text-end text-nowrap fw-bold">總計</td>
                     <td class="fs-5 text-primary fw-bold text-nowrap">
                       {{ $format.currency(order.total) }}
                     </td>
                   </tr>
                 </tfoot>
               </table>
-              <h3 class="text-center fw-bold mb-4">訂購人資訊</h3>
-              <table class="table table-light table-borderless mb-4">
-                <tbody>
-                  <tr class="table-nowrap">
-                    <th class="text-nowrap">姓名</th>
-                    <td class="text-nowrap">{{ order.user.name }}</td>
-                  </tr>
-                  <tr class="table-nowrap">
-                    <th width="100" class="text-nowrap">Email</th>
-                    <td class="text-nowrap">{{ order.user.email }}</td>
-                  </tr>
-                  <tr class="table-nowrap">
-                    <th class="text-nowrap">電話</th>
-                    <td class="text-nowrap">{{ order.user.tel }}</td>
-                  </tr>
-                  <tr class="table-nowrap">
-                    <th class="text-nowrap">付款方式</th>
-                    <td class="text-nowrap">{{ order.user.pay }}</td>
-                  </tr>
-                  <tr class="table-nowrap">
-                    <th>訂購狀態</th>
-                    <td>
-                      <span v-if="!order.is_paid" class="text-nowrap text-danger fw-bold"
-                        >尚未訂購</span
-                      >
-                      <span v-else class="text-success fw-bold text-nowrap">訂購完成</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="text-end" v-if="order.is_paid === false">
-                <button class="btn btn-primary ms-auto" type="submit">
-                  確認訂購<i class="bi bi-caret-right-fill"></i>
-                </button>
-              </div>
-              <div class="text-end" v-if="order.is_paid === true">
-                <RouterLink to="/products" class="btn btn-primary ms-auto"
-                  ><i class="bi bi-cart4 pe-1 fs-5"></i>繼續選購</RouterLink
-                >
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
+          <div class="custom-card shadow-sm p-4 mb-4 bg-white rounded-4 border border-secondary">
+            <h3 class="text-center fw-bold mb-4">
+              <i class="bi bi-person-vcard me-2"></i>訂購人資訊
+            </h3>
+            <table class="table table-borderless mb-0">
+              <tbody>
+                <tr>
+                  <th class="text-nowrap">姓名</th>
+                  <td class="text-body-secondary">{{ order.user.name }}</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td class="text-body-secondary">{{ order.user.email }}</td>
+                </tr>
+                <tr>
+                  <th class="text-start">電話</th>
+                  <td class="text-body-secondary">{{ order.user.tel }}</td>
+                </tr>
+                <tr>
+                  <th>付款方式</th>
+                  <td class="text-body-secondary">{{ order.user.pay }}</td>
+                </tr>
+                <tr>
+                  <th>訂購狀態</th>
+                  <td>
+                    <span v-if="!order.is_paid" class="text-danger fw-bold">尚未訂購</span>
+                    <span v-else class="text-success fw-bold">訂購完成</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-end" v-if="order.is_paid === false">
+            <button class="btn btn-primary ms-auto" type="submit">
+              確認訂購<i class="bi bi-caret-right-fill"></i>
+            </button>
+          </div>
+          <div class="text-end" v-if="order.is_paid === true">
+            <RouterLink to="/products" class="btn btn-primary ms-auto"
+              ><i class="bi bi-cart4 pe-1 fs-5"></i>繼續選購</RouterLink
+            >
+          </div>
+        </form>
       </div>
     </div>
   </section>

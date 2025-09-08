@@ -10,6 +10,7 @@
         </h2>
       </div>
       <nav
+        style="--bs-breadcrumb-divider: '>'"
         aria-label="breadcrumb"
         class="mt-3 mb-md-4 d-flex justify-content-start d-none d-md-block"
       >
@@ -41,16 +42,29 @@
             <h2 class="m-0 fw-bold fs-1 text-primary">{{ product.title }}</h2>
           </div>
           <div class="mt-4 text-primary" v-if="product.category !== '鮮乳'">
-            <p class="mb-2 fw-bold"><i class="bi bi-house-heart pe-2"></i>本店只提供冰飲</p>
             <p class="mb-2 fw-bold">
-              <i class="bi bi-house-heart pe-2"></i>本店只提供大杯尺寸 600ml
+              <i class="bi bi-house-heart pe-2"></i>本店只提供大杯尺寸 700ml
             </p>
-            <p class="mb-2 fw-bold">
-              <i class="bi bi-house-heart pe-2"></i>本店無提供加珍珠、椰果及布丁等服務
-            </p>
-            <p class="fw-bold">
-              <i class="bi bi-house-heart pe-2"></i>所有飲品甜度及冰塊皆為固定，無法調整
-            </p>
+            <p class="mb-2 fw-bold"><i class="bi bi-house-heart pe-2"></i>本店加料均免費</p>
+            <div class="mt-3">
+              <div class="d-flex flex-wrap align-items-center gap-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm text-nowrap"
+                  @click="openCustomizeModal"
+                >
+                  <i class="bi bi-sliders pe-1"></i>客製化選項
+                </button>
+                <div v-if="customizeData" class="customize-preview small text-dark-emphasis">
+                  <span class="me-3"><strong>冰塊：</strong>{{ customizeData.ice }}</span>
+                  <span class="me-3"><strong>甜度：</strong>{{ customizeData.sugar }}</span>
+                  <span class="me-3"
+                    ><strong>加料：</strong>{{ customizeData.toppings.join('、') || '無' }}</span
+                  >
+                  <span><strong>備註：</strong>{{ customizeData.notice || '無' }}</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="mt-4 text-primary" v-if="product.category === '鮮乳'">
             <p class="mb-2 fw-bold">
@@ -79,6 +93,7 @@
               <span class="text-danger fs-3">優惠價:</span> NT${{ $format.currency(product.price) }}
             </div>
           </div>
+
           <div class="d-flex justify-content-end align-items-center">
             <div
               class="d-flex align-items-center me-1"
@@ -100,6 +115,7 @@
                   min="1"
                   max="99"
                   v-model.number="qty"
+                  style="width: 50px"
                 />
               </label>
               <button
@@ -128,6 +144,11 @@
         <SwiperComponent />
       </div>
     </div>
+    <CustomizeModal
+      ref="custmizeModalRef"
+      :product="product"
+      @add-to-order="handleCustomizedOrder"
+    />
   </section>
   <FooterComponent />
 </template>
@@ -141,6 +162,7 @@ import SwiperComponent from '@/components/SwiperComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ShowNotification from '@/shared/swal'
 import { useRoute, useRouter } from 'vue-router'
+import CustomizeModal from '@/components/CustomizeModal.vue'
 
 const { VITE_APP_API, VITE_APP_PATH } = import.meta.env
 
@@ -148,7 +170,8 @@ export default {
   components: {
     VueLoading,
     SwiperComponent,
-    FooterComponent
+    FooterComponent,
+    CustomizeModal
   },
   setup() {
     const axios = inject('$axios')
@@ -161,6 +184,8 @@ export default {
     const qty = ref(1)
     const id = ref('')
     const isLoading = ref(false)
+    const customizeData = ref(null) // 儲存已選擇的客製化資料
+    const custmizeModalRef = ref(null) // 取得 modal 元件的 ref
 
     watch(qty, (newQty) => {
       if (typeof newQty !== 'number' || isNaN(newQty)) {
@@ -183,6 +208,7 @@ export default {
         }
       }
     )
+
     function getProduct() {
       const url = `${VITE_APP_API}api/${VITE_APP_PATH}/product/${id.value}`
       isLoading.value = true
@@ -206,6 +232,17 @@ export default {
         })
     }
 
+    function openCustomizeModal() {
+      if (custmizeModalRef.value) {
+        custmizeModalRef.value.showModal()
+      }
+    }
+
+    function handleCustomizedOrder(customData) {
+      customizeData.value = customData
+      ShowNotification('success', '已客製化品項')
+    }
+
     onMounted(() => {
       id.value = route.params.productId
       getProduct()
@@ -217,7 +254,11 @@ export default {
       isLoading,
       cart,
       addCart,
-      getProduct
+      getProduct,
+      custmizeModalRef,
+      customizeData,
+      handleCustomizedOrder,
+      openCustomizeModal
     }
   }
 }

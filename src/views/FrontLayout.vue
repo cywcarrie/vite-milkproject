@@ -53,25 +53,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.top {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  z-index: 99;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
-  opacity: 0.9;
-  i {
-    font-size: 24px;
-    color: #14213d;
-  }
-  @media screen and (max-width: 767.98px) {
-    bottom: 15px;
-    right: 15px;
-    i {
-      font-size: 20px;
-    }
-  }
-}
-</style>

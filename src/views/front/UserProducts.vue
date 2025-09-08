@@ -7,7 +7,11 @@
       >
         <h2 class="position-absolute text-center text-white fw-bolder banner-title">我們的商品</h2>
       </div>
-      <nav aria-label="breadcrumb" class="mt-3 mb-md-4 d-flex justify-content-start">
+      <nav
+        aria-label="breadcrumb"
+        style="--bs-breadcrumb-divider: '>'"
+        class="mt-3 mb-md-4 d-flex justify-content-start"
+      >
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <RouterLink to="/" class="text-dark hover-nav fw-bold">首頁</RouterLink>

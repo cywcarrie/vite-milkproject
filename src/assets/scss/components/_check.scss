@@ -21,3 +21,23 @@
     }
   }
 }
+.custom-card {
+  border-radius: 1rem;
+  background-color: #fdfdfd;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.custom-card:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+.table thead {
+  border-radius: 0.75rem 0.75rem 0 0;
+  overflow: hidden;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  padding: 1rem;
+}
