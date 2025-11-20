@@ -210,7 +210,7 @@ export default {
   setup(props, { emit }) {
     const { modalElement, showModal, hideModal } = useModal()
     const axios = inject('$axios')
-    const modal = ref({})
+    const fileInput = ref(null)
     const tempProduct = ref({})
 
     watch(
@@ -224,7 +224,7 @@ export default {
     )
 
     function uploadFile() {
-      const uploadedFile = modal.value.$refs.fileInput.files[0]
+      const uploadedFile = fileInput.value.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', uploadedFile)
       const url = `${VITE_APP_API}api/${VITE_APP_PATH}/admin/upload`
@@ -244,7 +244,8 @@ export default {
       showModal,
       hideModal,
       modalElement,
-      pushProduct
+      pushProduct,
+      fileInput
     }
   }
 }

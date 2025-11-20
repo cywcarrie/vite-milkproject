@@ -130,13 +130,13 @@
                       </div>
                       <h5 class="card-title fw-bolder text-primary mb-3">{{ item.title }}</h5>
                       <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="h5 text-secondary" v-if="!item.price">
+                        <div class="fs-5 text-secondary" v-if="!item.price">
                           NT${{ $format.currency(item.origin_price) }}
                         </div>
-                        <del class="h6 text-secondary" v-if="item.price"
+                        <del class="fs-6 text-secondary" v-if="item.price"
                           >NT${{ $format.currency(item.origin_price) }}</del
                         >
-                        <div class="h5 text-primary fw-bold" v-if="item.price">
+                        <div class="fs-5 text-primary fw-bold" v-if="item.price">
                           NT${{ $format.currency(item.price) }}
                         </div>
                       </div>
@@ -187,13 +187,13 @@
                       </div>
                       <h5 class="card-title fw-bolder text-primary mb-3">{{ item.title }}</h5>
                       <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="h5 text-secondary" v-if="!item.price">
+                        <div class="fs-5 text-secondary" v-if="!item.price">
                           NT${{ $format.currency(item.origin_price) }}
                         </div>
-                        <del class="h6 text-secondary" v-if="item.price"
+                        <del class="fs-6 text-secondary" v-if="item.price"
                           >NT${{ $format.currency(item.origin_price) }}</del
                         >
-                        <div class="h5 text-primary fw-bold" v-if="item.price">
+                        <div class="fs-5 text-primary fw-bold" v-if="item.price">
                           NT${{ $format.currency(item.price) }}
                         </div>
                       </div>
