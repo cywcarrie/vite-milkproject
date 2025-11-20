@@ -1,0 +1,1 @@
+import{_ as a,g as s,r as t,o as c,G as r}from"./index-qonDLBNP.js";const i={setup(){return{isLoading:s(!1)}}};function p(o,d,_,e,f,g){const n=t("LoadingVue");return c(),r(n,{active:e.isLoading,loader:"spinner",color:"#fca311",width:70,height:70,opacity:.7},null,8,["active"])}const u=a(i,[["render",p]]);export{u as V};
